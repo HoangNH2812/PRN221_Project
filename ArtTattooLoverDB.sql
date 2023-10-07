@@ -153,11 +153,11 @@ values
 (2,1,4,1,850000)
 insert into AppointmentDetail(AppointmentID,Price,ServiceID)
 values
-(1,1,250000),
-(1,2,300000),
-(2,1,250000),
-(2,2,300000),
-(2,2,300000)
+(1,250000,1),
+(1,300000,2),
+(2,250000,1),
+(2,300000,2),
+(2,300000,2)
 
 INSERT INTO Login(username,password,TattooLoverID,ArtistID,StaffID)
 values 
