@@ -19,7 +19,5 @@ public partial class Studio
 
     public virtual ICollection<Artist> Artists { get; set; } = new List<Artist>();
 
-    public virtual ICollection<Service> Services { get; set; } = new List<Service>();
-
     public virtual ICollection<Staff> Staff { get; set; } = new List<Staff>();
 }

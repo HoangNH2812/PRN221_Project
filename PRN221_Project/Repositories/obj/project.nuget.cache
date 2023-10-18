@@ -1,16 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "JPV03EbFDcK9QOleiSsFQp70IgquU/zVED/Kla4IqRijbji8OAwoUCcyF+pCkMx/CVOZggB4oUnCL0tFeuwEUw==",
+  "dgSpecHash": "2pnE/NaIpgPOX6cSQgPqtSAS6aLvm4UVupoX5AXimFA/wA2VfEw9fHnuUywnFt7R5qu4bAZtFqXEGNCmjIFYWA==",
   "success": true,
   "projectFilePath": "D:\\documents\\FPTU\\2023\\Fall2023\\Advanced Cross-Platform Application Programming With .NET(PRN221)\\Project Team\\source code\\PRN221_Project\\PRN221_Project\\Repositories\\Repositories.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Silver King\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
-    "C:\\Users\\Silver King\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Silver King\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Silver King\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Silver King\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Silver King\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
-    "C:\\Users\\Silver King\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Silver King\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Silver King\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",
     "C:\\Users\\Silver King\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.1.0\\microsoft.data.sqlclient.sni.runtime.5.1.0.nupkg.sha512",
     "C:\\Users\\Silver King\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.11\\microsoft.entityframeworkcore.7.0.11.nupkg.sha512",

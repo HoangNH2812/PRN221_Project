@@ -13,7 +13,11 @@ public partial class AppointmentDetail
 
     public int? ServiceId { get; set; }
 
+    public int? ScheduleId { get; set; }
+
     public virtual Appointment? Appointment { get; set; }
+
+    public virtual Schedule? Schedule { get; set; }
 
     public virtual Service? Service { get; set; }
 }

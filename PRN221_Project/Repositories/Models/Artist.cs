@@ -9,17 +9,15 @@ public partial class Artist
 
     public string? Fullname { get; set; }
 
-    public int? MainStyle { get; set; }
-
     public string? Phone { get; set; }
 
     public int? StudioId { get; set; }
 
-    public virtual ICollection<Login> Logins { get; set; } = new List<Login>();
-
-    public virtual Style? MainStyleNavigation { get; set; }
+    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+
+    public virtual ICollection<Service> Services { get; set; } = new List<Service>();
 
     public virtual Studio? Studio { get; set; }
 

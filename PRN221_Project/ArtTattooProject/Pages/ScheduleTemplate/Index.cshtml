@@ -1,0 +1,48 @@
+﻿@page
+@model ArtTattooProject.Pages.ScheduleTemplate.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule[0].Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule[0].Artist)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Schedule) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist.ArtistId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ScheduleId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ScheduleId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ScheduleId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

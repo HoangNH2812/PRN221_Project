@@ -9,9 +9,11 @@ public partial class Schedule
 
     public DateTime? Time { get; set; }
 
+    public int? Status { get; set; }
+
     public int? ArtistId { get; set; }
 
-    public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    public virtual ICollection<AppointmentDetail> AppointmentDetails { get; set; } = new List<AppointmentDetail>();
 
     public virtual Artist? Artist { get; set; }
 }

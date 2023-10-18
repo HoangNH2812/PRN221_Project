@@ -13,13 +13,9 @@ public partial class Appointment
 
     public int? TattooLoverId { get; set; }
 
-    public int? ScheduleId { get; set; }
-
     public int? StudioId { get; set; }
 
     public virtual ICollection<AppointmentDetail> AppointmentDetails { get; set; } = new List<AppointmentDetail>();
-
-    public virtual Schedule? Schedule { get; set; }
 
     public virtual Studio? Studio { get; set; }
 

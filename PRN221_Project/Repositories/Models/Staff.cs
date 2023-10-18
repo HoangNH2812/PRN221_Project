@@ -13,7 +13,7 @@ public partial class Staff
 
     public int? StudioId { get; set; }
 
-    public virtual ICollection<Login> Logins { get; set; } = new List<Login>();
+    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
     public virtual Studio? Studio { get; set; }
 }

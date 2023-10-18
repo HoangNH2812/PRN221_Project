@@ -13,7 +13,7 @@ public partial class TattooLover
 
     public int? Age { get; set; }
 
-    public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
-    public virtual ICollection<Login> Logins { get; set; } = new List<Login>();
+    public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 }

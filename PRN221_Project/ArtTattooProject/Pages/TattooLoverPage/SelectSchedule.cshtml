@@ -1,0 +1,42 @@
+﻿@page
+@model ArtTattooProject.Pages.TattooLoverPage.SelectScheduleModel
+@{
+    ViewData["Title"] = "Book a Slot";
+}
+@if (Model.Schedule.Count==0)
+{
+    <td>This artist has no free slot to book</td>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Schedule[0].Time)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Schedule)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                    <td>
+                        <form method="post">
+                            <input type="hidden" asp-for="@Model.serviceID" value="@Model.Service.ServiceId" />
+                            <input type="hidden" asp-for="@Model.scheduleID" value="@item.ScheduleId" />
+                            <input type="submit" value="Add to cart" class="btn btn-primary" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div>
+    <a asp-page="Index">Back to choose service</a>
+</div>

@@ -5,7 +5,7 @@ TattooLoverID int IDENTITY(1,1) primary key,
 Email nvarchar(255),
 PhoneNumber nvarchar(255),
 Age int
-)
+)  
 
 CREATE TABLE Studio(
 StudioID int IDENTITY(1,1) primary key,
@@ -22,7 +22,6 @@ StyleName nvarchar(255),
 CREATE TABLE Artists(
 ArtistID int IDENTITY(1,1) primary key,
 Fullname nvarchar(255),
-MainStyle int foreign key (MainStyle) REFERENCES Style(StyleID),
 Phone nvarchar(255),
 StudioID int foreign key (StudioID) REFERENCES Studio(StudioID),
 )
@@ -40,7 +39,7 @@ CREATE TABLE Service(
 ServiceID int IDENTITY(1,1) primary key,
 ServiceName nvarchar(255),
 Price money,
-StudioID int foreign key  (StudioID) REFERENCES Studio(StudioID)
+ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID),
 )
 
 CREATE TABLE Staff(
@@ -50,9 +49,11 @@ StaffPhone nvarchar(255),
 StudioID int foreign key  (StudioID) REFERENCES Studio(StudioID),
 )
 
+--status 0 is free, 1 is taken, 2 in cart
 CREATE TABLE Schedule(
 ScheduleID int IDENTITY(1,1) primary key,
 Time date,
+Status int,
 ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID),
 )
 
@@ -62,7 +63,6 @@ AppointmentID int IDENTITY(1,1) primary key,
 TotalPrice money,
 Status int,
 TattooLoverID int foreign key (TattooLoverID) REFERENCES TattooLover(TattooLoverID),
-ScheduleID int foreign key (ScheduleID) REFERENCES Schedule(ScheduleID),
 StudioID int foreign key  (StudioID) REFERENCES Studio(StudioID)
 );
 
@@ -70,7 +70,8 @@ CREATE TABLE AppointmentDetail(
 AppointmentDetailID int IDENTITY(1,1) primary key,
 Price money,
 AppointmentID int foreign key (AppointmentID) REFERENCES Appointments(AppointmentID),
-ServiceID int foreign key  (ServiceID) REFERENCES Service(ServiceID)
+ServiceID int foreign key  (ServiceID) REFERENCES Service(ServiceID),
+ScheduleID int foreign key (ScheduleID) REFERENCES Schedule(ScheduleID),
 )
 
 CREATE TABLE Certificate(
@@ -83,12 +84,12 @@ certificateID int foreign key  (certificateID) REFERENCES Certificate(certificat
 ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID)
 )
 
-CREATE TABLE Login(
+CREATE TABLE Account(
 username varchar(255) primary key,
 password varchar(255) not null,
-TattooLoverID int foreign key (TattooLoverID) REFERENCES TattooLover(TattooLoverID),
-ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID),
-StaffID int foreign key (StaffID) REFERENCES Staff(StaffID),
+TattooLoverID int unique foreign key (TattooLoverID) REFERENCES TattooLover(TattooLoverID) null,
+ArtistID int unique foreign key (ArtistID) REFERENCES Artists(ArtistID) null,
+StaffID int unique foreign key (StaffID) REFERENCES Staff(StaffID) null,
 )
 
 -- --------------------add value -----------------------
@@ -110,12 +111,6 @@ values
 
 insert into Style(StyleName) Values ('modern'),('gaming'),('street'),('freestyle'),('ancient')
 
-insert into service(ServiceName,StudioID,Price)
-values 
-('advise',1,250000),
-('invite artist for tattooing',1,300000),
-('advise',2,265000)
-
 insert into Staff(StaffName,StaffPhone,StudioID)
 values 
 ('staffstudio1','0685956345',1),
@@ -123,22 +118,29 @@ values
 ('staffstudio2','0139737563',2),
 ('staffs3','0848484848',3)
 
-insert into Artists(Fullname,Phone,StudioID,MainStyle)
+insert into Artists(Fullname,Phone,StudioID)
 values 
-('Neas Gronw','0684558741',1,1),
-('Ríoghnach Medb','0658742598',2,1),
-('Scáthach','0626594874',3,3)
+('Neas Gronw','0684558741',1),
+('Ríoghnach Medb','0658742598',2),
+('Scáthach','0626594874',3)
+
+insert into service(ServiceName,ArtistID,Price)
+values 
+('advise',1,250000),
+('invite artist for tattooing',1,300000),
+('advise',2,265000)
 
 insert into Certificate_Artists(ArtistID,certificateID) values (1,2),(1,1),(2,3),(3,1)
 
-insert into Schedule(ArtistID,Time)
+insert into Schedule(ArtistID,Time,Status)
 values 
-(1,'12-10-2023'),
-(2,'10-28-2023'),
-(1,'10-25-2023'),
-(3,'1-22-2024'),
-(1,'11-1-2023'),
-(1,'9-1-2023')
+(1,'12-10-2023',1),
+(2,'10-28-2023',0),
+(1,'10-25-2023',1),
+(3,'1-22-2024',0),
+(1,'11-1-2023',1),
+(1,'9-1-2023',1),
+(1,'12-12-2024',1)
 insert into TattoosDesign(TattoosDesignName,ArtistID,Description,StyleID)
 values 
 ('design1',1,'Description for design1',1),
@@ -147,19 +149,19 @@ values
 ('design3v2',3,'Description for design3v2',1),
 ('design',2,'Description for design',2)
 
-insert into Appointments(TattooLoverID,StudioID,ScheduleID,Status,TotalPrice)
+insert into Appointments(TattooLoverID,StudioID,Status,TotalPrice)
 values 
-(3,1,6,3,550000),
-(2,1,4,1,850000)
-insert into AppointmentDetail(AppointmentID,Price,ServiceID)
+(3,1,3,550000),
+(2,1,1,850000)
+insert into AppointmentDetail(AppointmentID,Price,ServiceID,ScheduleID)
 values
-(1,250000,1),
-(1,300000,2),
-(2,250000,1),
-(2,300000,2),
-(2,300000,2)
+(1,250000,1,1),
+(1,300000,2,3),
+(2,250000,1,5),
+(2,300000,2,6),
+(2,300000,2,7)
 
-INSERT INTO Login(username,password,TattooLoverID,ArtistID,StaffID)
+INSERT INTO Account(username,password,TattooLoverID,ArtistID,StaffID)
 values 
 ('userna1me','username',1,null,null),
 ('username2','username',2,null,null),

@@ -1,0 +1,68 @@
+﻿@page
+@model ArtTattooProject.Pages.TattooLoverPage.CartModel
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.appointmentDetail[0].Service.Artist.Studio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.appointmentDetail[0].Service.Artist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.appointmentDetail[0].Schedule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.appointmentDetail[0].Service)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.appointmentDetail[0].Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.cart != null)
+        {
+            foreach (var item in Model.appointmentDetail)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Service.Artist.Studio.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Service.Artist.Fullname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Schedule.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.AppointmentDetailId">Edit</a> |
+                        <a asp-page="Cart" asp-page-handler="delete" asp-route-id="@item.ServiceId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <td colspan="6" align="right">Total</td>
+            <td align="center">$@Model.Total</td>
+        </tr>
+        <tr>
+            <form method="post">
+                <input type="hidden" asp-for=@Model.Total />
+                <input type="submit" value="Check out" class="btn btn-primary" /> |
+
+            </form>
+            <a asp-page="./Index">Back</a>
+        </tr>
+    </tbody>
+</table>
+@Model.Msg

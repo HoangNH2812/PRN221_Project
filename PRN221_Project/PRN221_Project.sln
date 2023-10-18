@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{380B9DAF-725E-4874-8D55-CA0F9005F66F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{B7F51EF2-688C-4C0A-AC8E-A36D78789310}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtTattooProject", "ArtTattooProject\ArtTattooProject.csproj", "{DA3D23B4-7ACF-4925-B242-C25C7E26A309}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{380B9DAF-725E-4874-8D55-CA0F9005F66F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{380B9DAF-725E-4874-8D55-CA0F9005F66F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{380B9DAF-725E-4874-8D55-CA0F9005F66F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7F51EF2-688C-4C0A-AC8E-A36D78789310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7F51EF2-688C-4C0A-AC8E-A36D78789310}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7F51EF2-688C-4C0A-AC8E-A36D78789310}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7F51EF2-688C-4C0A-AC8E-A36D78789310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA3D23B4-7ACF-4925-B242-C25C7E26A309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA3D23B4-7ACF-4925-B242-C25C7E26A309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA3D23B4-7ACF-4925-B242-C25C7E26A309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA3D23B4-7ACF-4925-B242-C25C7E26A309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

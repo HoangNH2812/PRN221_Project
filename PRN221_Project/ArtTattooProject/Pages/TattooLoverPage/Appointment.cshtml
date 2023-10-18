@@ -1,0 +1,58 @@
+﻿@page
+@model ArtTattooProject.Pages.TattooLoverPage.AppointmentModel
+@{
+    ViewData["Title"] = "Appointment";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Studio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].AppointmentId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Appointment)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                    @if (item.Status == 0)
+                    {
+                        <div>waiting</div>
+                    } else if (item.Status == 1)
+                    {
+                        <div>on going</div>
+                    } else if (item.Status == 3)
+                    {
+                        <div>done</div>
+                    } else
+                    {
+                        <div>cancel</div>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Studio.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentId)
+                </td>
+                <td>
+                    <a asp-page="./AppointmentDetails" asp-route-id="@item.AppointmentId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,49 @@
+﻿@page
+@model ArtTattooProject.Pages.TattooLoverPage.AppointmentDetailsModel
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Appointment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Schedule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Service)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AppointmentDetail)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Appointment.AppointmentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceId)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.AppointmentDetailId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.AppointmentDetailId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.AppointmentDetailId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

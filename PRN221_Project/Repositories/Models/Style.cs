@@ -9,7 +9,5 @@ public partial class Style
 
     public string? StyleName { get; set; }
 
-    public virtual ICollection<Artist> Artists { get; set; } = new List<Artist>();
-
     public virtual ICollection<TattoosDesign> TattoosDesigns { get; set; } = new List<TattoosDesign>();
 }
