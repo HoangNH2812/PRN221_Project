@@ -49,7 +49,7 @@ StaffPhone nvarchar(255),
 StudioID int foreign key  (StudioID) REFERENCES Studio(StudioID),
 )
 
---status 0 is free, 1 is taken, 2 in cart
+--status 0 is free, 1 is taken
 CREATE TABLE Schedule(
 ScheduleID int IDENTITY(1,1) primary key,
 Time date,
@@ -81,15 +81,16 @@ certificateName nvarchar(255),
 
 CREATE TABLE Certificate_Artists(
 certificateID int foreign key  (certificateID) REFERENCES Certificate(certificateID),
-ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID)
+ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID),
+urllink nvarchar(255)
 )
 
 CREATE TABLE Account(
 username varchar(255) primary key,
 password varchar(255) not null,
-TattooLoverID int unique foreign key (TattooLoverID) REFERENCES TattooLover(TattooLoverID) null,
-ArtistID int unique foreign key (ArtistID) REFERENCES Artists(ArtistID) null,
-StaffID int unique foreign key (StaffID) REFERENCES Staff(StaffID) null,
+TattooLoverID int foreign key (TattooLoverID) REFERENCES TattooLover(TattooLoverID) null,
+ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID) null,
+StaffID int foreign key (StaffID) REFERENCES Staff(StaffID) null,
 )
 
 -- --------------------add value -----------------------

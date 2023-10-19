@@ -10,7 +10,7 @@ namespace ArtTattooProject.Pages
     public class LoginPageModel : PageModel
     {
         private readonly IAccountRepository _accountRepository;
-        
+
         public LoginPageModel(IAccountRepository repositoryBase)
         {
             _accountRepository = repositoryBase;
@@ -32,31 +32,33 @@ namespace ArtTattooProject.Pages
             try
             {
                 Account account;
-            account = _accountRepository.Login(Username, Password);
-            if (account != null)
-            {
-                HttpContext.Session.SetObjectAsJson("account", account);
-                if (account.ArtistId != null)
+                account = _accountRepository.Login(Username, Password);
+                if (account != null)
                 {
-                    return RedirectToPage("/ArtistPage/Index");
+                    HttpContext.Session.SetObjectAsJson("account", account);
+                    if (account.ArtistId != null)
+                    {
+                        return RedirectToPage("/ArtistPage/Index");
+                    }
+                    else if (account.StaffId != null)
+                    {
+                        return RedirectToPage("/StaffPage/Index");
+                    }
+                    else
+                    {
+                        return RedirectToPage("/TattooLoverPage/Index");
+                    }
                 }
-                else if (account.StaffId != null)
+                else
                 {
-                    return RedirectToPage("/StaffPage/Index");
-                }
-                else { 
-                    return RedirectToPage("/TattooLoverPage/Index");
+                    Msg = "Invalid";
+                    return Page();
                 }
             }
-            else
-            {
-                Msg = "Invalid";
-                return Page();
-            }
-        } catch (Exception ex)
+            catch (Exception ex)
             {
                 return RedirectToPage("/Error", ex);
-    }
-}
+            }
+        }
     }
 }

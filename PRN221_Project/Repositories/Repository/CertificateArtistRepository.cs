@@ -14,7 +14,8 @@ namespace Repositories.Repository
         public CertificateArtist AddNew(CertificateArtist CertificateArtist) => CertificateArtistDAO.Instance.AddNew(CertificateArtist);
 
         public void Delete(CertificateArtist CertificateArtist) => CertificateArtistDAO.Instance.Delete(CertificateArtist);
-
+        public CertificateArtist GetCertificateArtist(int certId, int artistId) => CertificateArtistDAO.Instance.GetCertificateArtist(certId, artistId);
+        public void Update(CertificateArtist CertificateArtist) => CertificateArtistDAO.Instance.Update(CertificateArtist);
         public IEnumerable<CertificateArtist> GetAll() => CertificateArtistDAO.Instance.GetAll();
 
         public IEnumerable<CertificateArtist> GetByArtistID(int id) => CertificateArtistDAO.Instance.GetByArtistID(id);

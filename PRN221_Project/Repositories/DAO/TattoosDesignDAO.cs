@@ -60,6 +60,20 @@ namespace Repositories.DAO
             return tattoosDesign;
         }
 
+        public IEnumerable<TattoosDesign> GetByArtist(int artistId) {
+            IEnumerable<TattoosDesign> list;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                list = DBContext.TattoosDesigns.Where(i=>i.ArtistId == artistId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return list;
+        }
+
         public int AddNew(TattoosDesign TattoosDesign)
         {
             int id;
@@ -106,7 +120,7 @@ namespace Repositories.DAO
                 if (tattoosDesign != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
-                    DBContext.TattoosDesigns.Remove(TattoosDesign);
+                    DBContext.TattoosDesigns.Remove(tattoosDesign);
                     DBContext.SaveChanges();
                 }
                 else

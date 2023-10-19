@@ -51,7 +51,7 @@ namespace Repositories.DAO
             try
             {
                 var DBContext = new ArtTattooLoverContext();
-                list = DBContext.AppointmentDetails.Where(i=> i.AppointmentId==AppointmentID);
+                list = DBContext.AppointmentDetails.Include(i=>i.Schedule).Where(i=> i.AppointmentId==AppointmentID).OrderByDescending(i=>i.Schedule.Time);
             }
             catch (Exception ex)
             {

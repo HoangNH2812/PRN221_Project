@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Repositories.Models;
 
-namespace ArtTattooProject.Pages.ScheduleTemplate
+namespace ArtTattooProject.Pages.CRUDTemplate
 {
     public class CreateModel : PageModel
     {
@@ -20,23 +20,24 @@ namespace ArtTattooProject.Pages.ScheduleTemplate
 
         public IActionResult OnGet()
         {
-        ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "ArtistId");
+        ViewData["StudioId"] = new SelectList(_context.Studios, "StudioId", "StudioId");
+        ViewData["TattooLoverId"] = new SelectList(_context.TattooLovers, "TattooLoverId", "TattooLoverId");
             return Page();
         }
 
         [BindProperty]
-        public Schedule Schedule { get; set; } = default!;
+        public Appointment Appointment { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Schedules == null || Schedule == null)
+          if (!ModelState.IsValid || _context.Appointments == null || Appointment == null)
             {
                 return Page();
             }
 
-            _context.Schedules.Add(Schedule);
+            _context.Appointments.Add(Appointment);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

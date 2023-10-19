@@ -8,16 +8,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Appointment)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.AppointmentDetail[0].Schedule)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AppointmentDetail[0].Service)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Price)
             </th>
             <th></th>
         </tr>
@@ -27,23 +24,19 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Schedule.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Appointment.AppointmentId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Schedule.ScheduleId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Service.ServiceId)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.AppointmentDetailId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.AppointmentDetailId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.AppointmentDetailId">Delete</a>
                 </td>
             </tr>
         }
+        <tr>
+            <td colspan="6" align="right">Total</td>
+            <td align="center">$@Model.totalPrice</td>
+        </tr>
     </tbody>
 </table>

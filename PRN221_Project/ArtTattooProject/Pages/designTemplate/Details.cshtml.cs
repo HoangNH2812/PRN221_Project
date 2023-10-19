@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Models;
 
-namespace ArtTattooProject.Pages.ScheduleTemplate
+namespace ArtTattooProject.Pages.designTemplate
 {
     public class DetailsModel : PageModel
     {
@@ -18,23 +18,23 @@ namespace ArtTattooProject.Pages.ScheduleTemplate
             _context = context;
         }
 
-      public Schedule Schedule { get; set; } = default!; 
+      public TattoosDesign TattoosDesign { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Schedules == null)
+            if (id == null || _context.TattoosDesigns == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedules.FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
+            var tattoosdesign = await _context.TattoosDesigns.FirstOrDefaultAsync(m => m.TattoosDesignId == id);
+            if (tattoosdesign == null)
             {
                 return NotFound();
             }
             else 
             {
-                Schedule = schedule;
+                TattoosDesign = tattoosdesign;
             }
             return Page();
         }

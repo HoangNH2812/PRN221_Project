@@ -1,4 +1,10 @@
 ﻿@page
 @model ArtTattooProject.Pages.ArtistPage.IndexModel
 @{
+    ViewData["Title"] = "Artist page";
 }
+
+<a asp-page="./SchedulesManage/Index">Manage my Schedule</a>
+<a asp-page="./DesignManage/Index">Manage my Design</a>
+<a asp-page="./CertificateManage/Index">Manage my Certificate</a>
+<a asp-page="./ServiceManage/Index">Manage my Service</a>

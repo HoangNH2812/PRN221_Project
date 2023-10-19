@@ -20,5 +20,6 @@ namespace Repositories.Repository
         public TattoosDesign GetByID(int id) => TattoosDesignDAO.Instance.GetByID(id);
 
         public void Update(TattoosDesign TattoosDesign) => TattoosDesignDAO.Instance.Update(TattoosDesign);
+        public IEnumerable<TattoosDesign> GetByArtist(int artistId) => TattoosDesignDAO.Instance.GetByArtist(artistId);
     }
 }

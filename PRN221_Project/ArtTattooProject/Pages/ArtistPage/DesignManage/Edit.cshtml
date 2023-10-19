@@ -1,0 +1,55 @@
+﻿@page
+@model ArtTattooProject.Pages.ArtistPage.DesignManage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TattoosDesign</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TattoosDesign.TattoosDesignId" />
+            <div class="form-group">
+                <label asp-for="TattoosDesign.TattoosDesignName" class="control-label"></label>
+                <input asp-for="TattoosDesign.TattoosDesignName" class="form-control" />
+                <span asp-validation-for="TattoosDesign.TattoosDesignName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TattoosDesign.StyleId" class="control-label"></label>
+                <select asp-for="TattoosDesign.StyleId" class="form-control" asp-items="ViewBag.StyleId"></select>
+                <span asp-validation-for="TattoosDesign.StyleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TattoosDesign.ImgUri" class="control-label"></label>
+                <input asp-for="TattoosDesign.ImgUri" class="form-control" />
+                <span asp-validation-for="TattoosDesign.ImgUri" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TattoosDesign.Description" class="control-label"></label>
+                <input asp-for="TattoosDesign.Description" class="form-control" />
+                <span asp-validation-for="TattoosDesign.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TattoosDesign.ArtistId" class="control-label"></label>
+                <select asp-for="TattoosDesign.ArtistId" class="form-control" asp-items="ViewBag.ArtistId"></select>
+                <span asp-validation-for="TattoosDesign.ArtistId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

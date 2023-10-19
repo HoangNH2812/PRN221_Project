@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace Repositories.Models;
-
 public partial class CertificateArtist
 {
     public int? CertificateId { get; set; }
 
     public int? ArtistId { get; set; }
+
+    public string? Urllink { get; set; }
 
     public virtual Artist? Artist { get; set; }
 

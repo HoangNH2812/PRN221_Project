@@ -60,6 +60,35 @@ namespace Repositories.DAO
             return service;
         }
 
+        public IEnumerable<Service> GetByName(string name)
+        {
+            IEnumerable<Service> service;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                service = DBContext.Services.Include(i => i.Artist).Where(i => i.ServiceName.Contains(name));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return service;
+        }
+        public IEnumerable<Service> GetByArtist(int id)
+        {
+            IEnumerable<Service> service;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                service = DBContext.Services.Where(i => i.ArtistId==id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return service;
+        }
+
         public int AddNew(Service Service)
         {
             int id;
@@ -106,7 +135,7 @@ namespace Repositories.DAO
                 if (service != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
-                    DBContext.Services.Remove(Service);
+                    DBContext.Services.Remove(service);
                     DBContext.SaveChanges();
                 }
                 else

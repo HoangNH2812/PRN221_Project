@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Models;
 
-namespace ArtTattooProject.Pages.ScheduleTemplate
+namespace ArtTattooProject.Pages.CRUDTemplate
 {
     public class IndexModel : PageModel
     {
@@ -18,14 +18,15 @@ namespace ArtTattooProject.Pages.ScheduleTemplate
             _context = context;
         }
 
-        public IList<Schedule> Schedule { get;set; } = default!;
+        public IList<Appointment> Appointment { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Schedules != null)
+            if (_context.Appointments != null)
             {
-                Schedule = await _context.Schedules
-                .Include(s => s.Artist).ToListAsync();
+                Appointment = await _context.Appointments
+                .Include(a => a.Studio)
+                .Include(a => a.TattooLover).ToListAsync();
             }
         }
     }

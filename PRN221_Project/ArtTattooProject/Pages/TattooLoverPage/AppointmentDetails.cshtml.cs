@@ -10,15 +10,19 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         private readonly IAppointmentDetailRepository _appointmentDetailRepository;
         private readonly IServiceRepository _serviceRepository;
         private readonly IScheduleRepository _scheduleRepository;
-        public AppointmentDetailsModel(IAppointmentDetailRepository appointmentDetailRepository, IServiceRepository serviceRepository, IScheduleRepository scheduleRepository)
+        private readonly IAppointmentRepository _appointmentRepository;
+        public AppointmentDetailsModel(IAppointmentDetailRepository appointmentDetailRepository, IServiceRepository serviceRepository, IScheduleRepository scheduleRepository, IAppointmentRepository appointmentRepository)
         {
             _appointmentDetailRepository = appointmentDetailRepository;
             _serviceRepository = serviceRepository;
             _scheduleRepository = scheduleRepository;
+            _appointmentRepository = appointmentRepository;
         }
         public IList<AppointmentDetail> AppointmentDetail { get; set; } = default!;
+        public decimal totalPrice {  get; set; }
         public void OnGet(int? id)
         {
+            totalPrice = _appointmentRepository.GetByID(id.Value).TotalPrice.Value;
             AppointmentDetail = _appointmentDetailRepository.GetByAppointmentID(id.Value).ToList();
             foreach (var appointmentDetail in AppointmentDetail)
             {

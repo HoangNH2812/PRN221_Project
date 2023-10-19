@@ -106,7 +106,7 @@ namespace Repositories.DAO
                 if (tattooLover != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
-                    DBContext.TattooLovers.Remove(TattooLover);
+                    DBContext.TattooLovers.Remove(tattooLover);
                     DBContext.SaveChanges();
                 }
                 else

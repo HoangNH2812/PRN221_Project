@@ -89,12 +89,15 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             Appointment appointment = new Appointment();
             appointment.TotalPrice = HttpContext.Session.GetObjectFromJson<decimal>("totalPrice");
             appointment.TattooLoverId = HttpContext.Session.GetObjectFromJson<Account>("account").TattooLoverId;
-            appointment.Status = 0;
-            int? studioID = GetStudioIDInCart();
+            appointment.Status = 1;
+            
             if (cart.Count == 0 || cart==null) {
                 Msg = "No service to book now";
                 return Page();
             }
+
+            cart = SessionHelper.GetObjectFromJson<List<AppointmentDetail>>(HttpContext.Session, "cart");
+            int? studioID = GetStudioIDInCart(cart);
             if (studioID != null)
             {
                 appointment.StudioId = studioID.Value;
@@ -102,8 +105,15 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                 Msg = "all service must from 1 studio";
                 return Page();
             }
+
+            int? index = ValidateTime(cart);
+            if (index == null) {
+                string serviceName = _serviceRepository.GetByID(cart[(int)index].ServiceId.Value).ServiceName;
+                Msg = "Schedule time of service " + serviceName + " has booked by another or deleted, please choose another schedule time";
+                return Page();
+            }
+
             int id = _appointmentRepository.AddNew(appointment);
-            cart = SessionHelper.GetObjectFromJson<List<AppointmentDetail>>(HttpContext.Session, "cart");
             foreach (AppointmentDetail appointmentDetail in cart)
             {
                 appointmentDetail.AppointmentId= id;
@@ -114,10 +124,23 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             return RedirectToPage("Appointment");
         }
 
-        public int? GetStudioIDInCart() {
+        public int? ValidateTime(List<AppointmentDetail> cart)
+        {
+            int? index = null;
+            for (int i=0; i<cart.Count(); i++)
+            {
+                int? status = _scheduleRepository.GetByID(cart[i].ScheduleId.Value).Status;
+                if ( status == null || status == 1)
+                {
+                    return i;
+                }
+            }
+            return index;
+        }
+
+        public int? GetStudioIDInCart(List<AppointmentDetail> cart) {
             int? studioID;
             int? temp;
-            cart = SessionHelper.GetObjectFromJson<List<AppointmentDetail>>(HttpContext.Session, "cart");
             if (cart.Count==1) {
                 studioID = _GetStudioIDFromServiceID((int)cart[0].ServiceId);
             }

@@ -59,13 +59,19 @@ namespace Repositories.DAO
             }
             return schedule;
         }
-        public IEnumerable<Schedule> GetSchedules(int artistID, int status)
+        public IEnumerable<Schedule> GetSchedules(int artistID, int? status)
         {
             IEnumerable<Schedule> list;
             try
             {
                 var DBContext = new ArtTattooLoverContext();
-                list = DBContext.Schedules.Where(i => i.ArtistId == artistID && i.Status == status);
+                if (status == null)
+                {
+                    list = DBContext.Schedules.Where(i => i.ArtistId == artistID);
+                } else
+                {
+                    list = DBContext.Schedules.Where(i => i.ArtistId == artistID && i.Status == status);
+                }
             }
             catch (Exception ex)
             {
@@ -80,6 +86,8 @@ namespace Repositories.DAO
             {
                 var DBContext = new ArtTattooLoverContext();
               //  Schedule.ScheduleId = DBContext.Schedules.OrderByDescending(i => i.ScheduleId).First().ScheduleId + 1;
+                Schedule checkSchedule = DBContext.Schedules.SingleOrDefault(i => i.Time == Schedule.Time && i.ArtistId == Schedule.ArtistId);
+                if (checkSchedule != null) throw new Exception("date already added in schedule");
                 DBContext.Schedules.Add(Schedule);
                 DBContext.SaveChanges();
                 id = Schedule.ScheduleId;

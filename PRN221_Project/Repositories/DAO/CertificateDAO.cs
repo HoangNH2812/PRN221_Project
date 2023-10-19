@@ -106,7 +106,7 @@ namespace Repositories.DAO
                 if (certificate != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
-                    DBContext.Certificates.Remove(Certificate);
+                    DBContext.Certificates.Remove(certificate);
                     DBContext.SaveChanges();
                 }
                 else

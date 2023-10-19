@@ -51,7 +51,7 @@ namespace Repositories.DAO
             try
             {
                 var DBContext = new ArtTattooLoverContext();
-                certificateArtist = DBContext.CertificateArtists.Where(i => i.ArtistId == id);
+                certificateArtist = DBContext.CertificateArtists.Include(i=>i.Certificate).Where(i => i.ArtistId == id);
             }
             catch (Exception ex)
             {
@@ -60,6 +60,22 @@ namespace Repositories.DAO
             return certificateArtist;
         }
 
+        public CertificateArtist GetCertificateArtist(int certId, int artistId)
+        {
+            CertificateArtist certificateArtist;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                certificateArtist = DBContext.CertificateArtists
+                    .Include(i => i.Certificate)
+                    .SingleOrDefault(i => i.ArtistId == artistId && i.CertificateId == certId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return certificateArtist;
+        }
         public CertificateArtist AddNew(CertificateArtist CertificateArtist)
         {
             CertificateArtist tmp;
@@ -70,7 +86,7 @@ namespace Repositories.DAO
                 tmp = DBContext.CertificateArtists.FirstOrDefault(i => i.CertificateId == CertificateArtist.CertificateId && i.ArtistId == CertificateArtist.ArtistId);
                 if (tmp != null)
                 {
-                    throw new Exception("");
+                    throw new Exception("you have already add this certificate, please update to change certificate data");
                 }
                 else
                 {
@@ -84,16 +100,37 @@ namespace Repositories.DAO
             }
             return tmp;
         }
+        public void Update(CertificateArtist CertificateArtist)
+        {
+            try
+            {
+                CertificateArtist certificateArtist = GetCertificateArtist(CertificateArtist.CertificateId.Value, CertificateArtist.ArtistId.Value);
+                if (certificateArtist != null)
+                {
+                    var DBContext = new ArtTattooLoverContext();
+                    DBContext.Entry<CertificateArtist>(CertificateArtist).State = EntityState.Modified;
+                    DBContext.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Not exist");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         public void Delete(CertificateArtist CertificateArtist)
         {
             try
             {
                 var DBContext = new ArtTattooLoverContext();
-                CertificateArtist certificate = DBContext.CertificateArtists.FirstOrDefault(i => i.CertificateId == CertificateArtist.CertificateId && i.ArtistId == CertificateArtist.ArtistId);
-                if (certificate != null)
+                CertificateArtist certificateArtist = DBContext.CertificateArtists.FirstOrDefault(i => i.CertificateId == CertificateArtist.CertificateId && i.ArtistId == CertificateArtist.ArtistId);
+                if (certificateArtist != null)
                 {
-                    DBContext.CertificateArtists.Remove(CertificateArtist);
+                    DBContext.CertificateArtists.Remove(certificateArtist);
                     DBContext.SaveChanges();
                 }
                 else

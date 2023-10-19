@@ -121,7 +121,7 @@ namespace Repositories.DAO
                 if (appointment != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
-                    DBContext.Appointments.Remove(Appointment);
+                    DBContext.Appointments.Remove(appointment);
                     DBContext.SaveChanges();
                 }
                 else

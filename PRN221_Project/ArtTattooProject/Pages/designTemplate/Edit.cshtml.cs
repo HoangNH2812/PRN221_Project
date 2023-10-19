@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Models;
 
-namespace ArtTattooProject.Pages.ScheduleTemplate
+namespace ArtTattooProject.Pages.designTemplate
 {
     public class EditModel : PageModel
     {
@@ -20,22 +20,23 @@ namespace ArtTattooProject.Pages.ScheduleTemplate
         }
 
         [BindProperty]
-        public Schedule Schedule { get; set; } = default!;
+        public TattoosDesign TattoosDesign { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Schedules == null)
+            if (id == null || _context.TattoosDesigns == null)
             {
                 return NotFound();
             }
 
-            var schedule =  await _context.Schedules.FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
+            var tattoosdesign =  await _context.TattoosDesigns.FirstOrDefaultAsync(m => m.TattoosDesignId == id);
+            if (tattoosdesign == null)
             {
                 return NotFound();
             }
-            Schedule = schedule;
+            TattoosDesign = tattoosdesign;
            ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "ArtistId");
+           ViewData["StyleId"] = new SelectList(_context.Styles, "StyleId", "StyleId");
             return Page();
         }
 
@@ -48,7 +49,7 @@ namespace ArtTattooProject.Pages.ScheduleTemplate
                 return Page();
             }
 
-            _context.Attach(Schedule).State = EntityState.Modified;
+            _context.Attach(TattoosDesign).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +57,7 @@ namespace ArtTattooProject.Pages.ScheduleTemplate
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ScheduleExists(Schedule.ScheduleId))
+                if (!TattoosDesignExists(TattoosDesign.TattoosDesignId))
                 {
                     return NotFound();
                 }
@@ -69,9 +70,9 @@ namespace ArtTattooProject.Pages.ScheduleTemplate
             return RedirectToPage("./Index");
         }
 
-        private bool ScheduleExists(int id)
+        private bool TattoosDesignExists(int id)
         {
-          return (_context.Schedules?.Any(e => e.ScheduleId == id)).GetValueOrDefault();
+          return (_context.TattoosDesigns?.Any(e => e.TattoosDesignId == id)).GetValueOrDefault();
         }
     }
 }

@@ -49,7 +49,7 @@ public partial class ArtTattooLoverContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.Username).HasName("PK__Account__F3DBC57345CD8DDC");
+            entity.HasKey(e => e.Username).HasName("PK__Account__F3DBC57332E0473B");
 
             entity.ToTable("Account");
 
@@ -80,7 +80,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<Appointment>(entity =>
         {
-            entity.HasKey(e => e.AppointmentId).HasName("PK__Appointm__8ECDFCA2E052390F");
+            entity.HasKey(e => e.AppointmentId).HasName("PK__Appointm__8ECDFCA23414E8E6");
 
             entity.Property(e => e.AppointmentId).HasColumnName("AppointmentID");
             entity.Property(e => e.StudioId).HasColumnName("StudioID");
@@ -98,7 +98,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<AppointmentDetail>(entity =>
         {
-            entity.HasKey(e => e.AppointmentDetailId).HasName("PK__Appointm__B475AC152A03DCF4");
+            entity.HasKey(e => e.AppointmentDetailId).HasName("PK__Appointm__B475AC15C0CE93A4");
 
             entity.ToTable("AppointmentDetail");
 
@@ -123,7 +123,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<Artist>(entity =>
         {
-            entity.HasKey(e => e.ArtistId).HasName("PK__Artists__25706B70E2B11A94");
+            entity.HasKey(e => e.ArtistId).HasName("PK__Artists__25706B7060F8C65D");
 
             entity.Property(e => e.ArtistId).HasColumnName("ArtistID");
             entity.Property(e => e.Fullname).HasMaxLength(255);
@@ -137,7 +137,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<Certificate>(entity =>
         {
-            entity.HasKey(e => e.CertificateId).HasName("PK__Certific__A15CBE8E51D91F69");
+            entity.HasKey(e => e.CertificateId).HasName("PK__Certific__A15CBE8E7796633E");
 
             entity.ToTable("Certificate");
 
@@ -150,11 +150,14 @@ public partial class ArtTattooLoverContext : DbContext
         modelBuilder.Entity<CertificateArtist>(entity =>
         {
             entity
-                .HasNoKey()
-                .ToTable("Certificate_Artists");
-
+               // .HasNoKey()
+                .ToTable("Certificate_Artists")
+            .HasKey(x => new { x.ArtistId, x.CertificateId });
             entity.Property(e => e.ArtistId).HasColumnName("ArtistID");
             entity.Property(e => e.CertificateId).HasColumnName("certificateID");
+            entity.Property(e => e.Urllink)
+                .HasMaxLength(255)
+                .HasColumnName("urllink");
 
             entity.HasOne(d => d.Artist).WithMany()
                 .HasForeignKey(d => d.ArtistId)
@@ -167,7 +170,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<Schedule>(entity =>
         {
-            entity.HasKey(e => e.ScheduleId).HasName("PK__Schedule__9C8A5B69A03A0027");
+            entity.HasKey(e => e.ScheduleId).HasName("PK__Schedule__9C8A5B698A58C3C1");
 
             entity.ToTable("Schedule");
 
@@ -182,7 +185,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service__C51BB0EA556648ED");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service__C51BB0EABD8067AB");
 
             entity.ToTable("Service");
 
@@ -198,7 +201,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<Staff>(entity =>
         {
-            entity.HasKey(e => e.StaffId).HasName("PK__Staff__96D4AAF72DAA3B7A");
+            entity.HasKey(e => e.StaffId).HasName("PK__Staff__96D4AAF7596F0215");
 
             entity.Property(e => e.StaffId).HasColumnName("StaffID");
             entity.Property(e => e.StaffName).HasMaxLength(255);
@@ -212,7 +215,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<Studio>(entity =>
         {
-            entity.HasKey(e => e.StudioId).HasName("PK__Studio__4ACC3B506773FA3A");
+            entity.HasKey(e => e.StudioId).HasName("PK__Studio__4ACC3B5040AF08EB");
 
             entity.ToTable("Studio");
 
@@ -225,7 +228,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<Style>(entity =>
         {
-            entity.HasKey(e => e.StyleId).HasName("PK__Style__8AD147A02D1CE4A3");
+            entity.HasKey(e => e.StyleId).HasName("PK__Style__8AD147A07F53CE66");
 
             entity.ToTable("Style");
 
@@ -235,7 +238,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<TattooLover>(entity =>
         {
-            entity.HasKey(e => e.TattooLoverId).HasName("PK__TattooLo__7FF7E1A185B1DABA");
+            entity.HasKey(e => e.TattooLoverId).HasName("PK__TattooLo__7FF7E1A10815D5F0");
 
             entity.ToTable("TattooLover");
 
@@ -246,7 +249,7 @@ public partial class ArtTattooLoverContext : DbContext
 
         modelBuilder.Entity<TattoosDesign>(entity =>
         {
-            entity.HasKey(e => e.TattoosDesignId).HasName("PK__TattoosD__0454E0D0F7BBBC47");
+            entity.HasKey(e => e.TattoosDesignId).HasName("PK__TattoosD__0454E0D04CE9D0FA");
 
             entity.ToTable("TattoosDesign");
 

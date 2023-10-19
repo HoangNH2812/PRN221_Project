@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Models;
 
-namespace ArtTattooProject.Pages.ScheduleTemplate
+namespace ArtTattooProject.Pages.ArtistPage.DesignManage
 {
     public class DeleteModel : PageModel
     {
@@ -19,40 +19,40 @@ namespace ArtTattooProject.Pages.ScheduleTemplate
         }
 
         [BindProperty]
-      public Schedule Schedule { get; set; } = default!;
+      public TattoosDesign TattoosDesign { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Schedules == null)
+            if (id == null || _context.TattoosDesigns == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedules.FirstOrDefaultAsync(m => m.ScheduleId == id);
+            var tattoosdesign = await _context.TattoosDesigns.FirstOrDefaultAsync(m => m.TattoosDesignId == id);
 
-            if (schedule == null)
+            if (tattoosdesign == null)
             {
                 return NotFound();
             }
             else 
             {
-                Schedule = schedule;
+                TattoosDesign = tattoosdesign;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Schedules == null)
+            if (id == null || _context.TattoosDesigns == null)
             {
                 return NotFound();
             }
-            var schedule = await _context.Schedules.FindAsync(id);
+            var tattoosdesign = await _context.TattoosDesigns.FindAsync(id);
 
-            if (schedule != null)
+            if (tattoosdesign != null)
             {
-                Schedule = schedule;
-                _context.Schedules.Remove(Schedule);
+                TattoosDesign = tattoosdesign;
+                _context.TattoosDesigns.Remove(TattoosDesign);
                 await _context.SaveChangesAsync();
             }
 

@@ -14,5 +14,6 @@ namespace Repositories.IRepository
         public int AddNew(TattoosDesign TattoosDesign);
         public void Update(TattoosDesign TattoosDesign);
         public void Delete(TattoosDesign TattoosDesign);
+        public IEnumerable<TattoosDesign> GetByArtist(int artistId);
     }
 }

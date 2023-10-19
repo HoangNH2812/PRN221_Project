@@ -118,11 +118,11 @@ namespace Repositories.DAO
         {
             try
             {
-                Artist cus = GetByID(Artist.ArtistId);
-                if (cus != null)
+                Artist artist = GetByID(Artist.ArtistId);
+                if (artist != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
-                    DBContext.Artists.Remove(Artist);
+                    DBContext.Artists.Remove(artist);
                     DBContext.SaveChanges();
                 }
                 else
