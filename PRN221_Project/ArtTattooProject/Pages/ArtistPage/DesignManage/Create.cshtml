@@ -33,14 +33,11 @@
                 <span asp-validation-for="TattoosDesign.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TattoosDesign.ArtistId" class="control-label"></label>
-                <select asp-for="TattoosDesign.ArtistId" class ="form-control" asp-items="ViewBag.ArtistId"></select>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
+    <div> @Model.Msg</div>
 </div>
 
 <div>

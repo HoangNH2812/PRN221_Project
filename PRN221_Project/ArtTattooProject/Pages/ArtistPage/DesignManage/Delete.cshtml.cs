@@ -5,17 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Repositories.IRepository;
 using Repositories.Models;
 
 namespace ArtTattooProject.Pages.ArtistPage.DesignManage
 {
     public class DeleteModel : PageModel
     {
-        private readonly Repositories.Models.ArtTattooLoverContext _context;
+        private readonly ITattoosDesignRepository _tattoosDesignRepository;
+        private readonly IStyleRepository _styleRepository;
 
-        public DeleteModel(Repositories.Models.ArtTattooLoverContext context)
+        public DeleteModel(ITattoosDesignRepository tattoosDesignRepository, IStyleRepository styleRepository)
         {
-            _context = context;
+            _tattoosDesignRepository = tattoosDesignRepository;
+            _styleRepository = styleRepository;
         }
 
         [BindProperty]
@@ -23,12 +26,13 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.TattoosDesigns == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var tattoosdesign = await _context.TattoosDesigns.FirstOrDefaultAsync(m => m.TattoosDesignId == id);
+            var tattoosdesign = _tattoosDesignRepository.GetByID(id.Value);
+            tattoosdesign.Style = _styleRepository.GetByID(tattoosdesign.StyleId.Value);
 
             if (tattoosdesign == null)
             {
@@ -41,19 +45,18 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public  IActionResult OnPost(int? id)
         {
-            if (id == null || _context.TattoosDesigns == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var tattoosdesign = await _context.TattoosDesigns.FindAsync(id);
+            var tattoosdesign = _tattoosDesignRepository.GetByID(id.Value);
 
             if (tattoosdesign != null)
             {
                 TattoosDesign = tattoosdesign;
-                _context.TattoosDesigns.Remove(TattoosDesign);
-                await _context.SaveChangesAsync();
+               _tattoosDesignRepository.Delete(TattoosDesign);
             }
 
             return RedirectToPage("./Index");

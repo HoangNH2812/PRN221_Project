@@ -23,9 +23,6 @@
                 @Html.DisplayNameFor(model => model.TattoosDesign[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TattoosDesign[0].Artist)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.TattoosDesign[0].Style)
             </th>
             <th></th>
@@ -44,10 +41,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Artist.ArtistId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Style.StyleId)
+                @Html.DisplayFor(modelItem => item.Style.StyleName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.TattoosDesignId">Edit</a> |
@@ -58,3 +52,17 @@
 }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.TattoosDesign.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.TattoosDesign.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.TattoosDesign.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.TattoosDesign.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
