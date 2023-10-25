@@ -34,5 +34,11 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             Service = PaginatedList<Service>.Create(
                 ServiceList, pageIndex ?? 1, pageSize);
         }
+
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToPage("../LoginPage.cshtml");
+        }
     }
 }

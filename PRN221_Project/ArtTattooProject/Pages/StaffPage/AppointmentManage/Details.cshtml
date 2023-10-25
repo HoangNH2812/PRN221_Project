@@ -1,0 +1,64 @@
+﻿@page
+@model ArtTattooProject.Pages.StaffPage.AppointmentManage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Schedule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Service)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDetail[0].Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AppointmentDetail)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Schedule.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<tr>
+    <td colspan="6" align="right">Total</td>
+    <td align="center">$@Model.Appointment.TotalPrice</td>
+</tr>
+<br />
+@{
+    var prevDisabled = !Model.AppointmentDetail.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.AppointmentDetail.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.AppointmentDetail.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.AppointmentDetail.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>

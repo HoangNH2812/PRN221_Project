@@ -1,0 +1,135 @@
+﻿@page
+@model ArtTattooProject.Pages.StaffPage.ArtistManage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Artist</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Artist.Fullname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Artist.Fullname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Artist.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Artist.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Artist.Studio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Artist.Studio.StudioId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Artist?.ArtistId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].ServiceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Price)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Service)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabledService = !Model.Service.HasPreviousPage ? "disabled" : "";
+    var nextDisabledService = !Model.Service.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Details"
+   asp-route-id="@Model.Artist?.ArtistId"
+   asp-route-pageIndexService="@(Model.Service.PageIndex - 1)"
+   class="btn btn-primary @prevDisabledService">
+    Previous
+</a>
+<a asp-page="./Details"
+   asp-route-id="@Model.Artist?.ArtistId"
+   asp-route-pageIndexService="@(Model.Service.PageIndex + 1)"
+   class="btn btn-primary @nextDisabledService">
+    Next
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TattoosDesign[0].TattoosDesignName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TattoosDesign[0].ImgUri)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TattoosDesign[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TattoosDesign[0].Style)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TattoosDesign)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TattoosDesignName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImgUri)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Style.StyleName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabledDesign = !Model.TattoosDesign.HasPreviousPage ? "disabled" : "";
+    var nextDisabledDesign = !Model.TattoosDesign.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Details"
+   asp-route-id="@Model.Artist?.ArtistId"
+   asp-route-pageIndexService="@(Model.Service.PageIndex)"
+   asp-route-pageIndexTattoosDesign="@(Model.TattoosDesign.PageIndex - 1)"
+   class="btn btn-primary @prevDisabledDesign">
+    Previous
+</a>
+<a asp-page="./Details"
+   asp-route-id="@Model.Artist?.ArtistId"
+   asp-route-pageIndexService="@(Model.Service.PageIndex)"
+   asp-route-pageIndexTattoosDesign="@(Model.TattoosDesign.PageIndex + 1)"
+   class="btn btn-primary @nextDisabledDesign">
+    Next
+</a>

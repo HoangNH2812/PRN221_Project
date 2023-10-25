@@ -45,6 +45,20 @@ namespace Repositories.DAO
             }
             return list;
         }
+        public IEnumerable<Artist> GetByStudio(int studioId)
+        {
+            IEnumerable<Artist> list;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                list = DBContext.Artists.Where(i=>i.StudioId==studioId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return list;
+        }
 
         public Artist GetByID(int id)
         {

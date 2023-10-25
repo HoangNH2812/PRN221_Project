@@ -59,7 +59,20 @@ namespace Repositories.DAO
             }
             return list;
         }
-
+        public IEnumerable<Appointment> GetByStudio(int studioId)
+        {
+            IEnumerable<Appointment> list;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                list = DBContext.Appointments.Where(i => i.StudioId == studioId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return list;
+        }
         public Appointment GetByID(int id)
         {
             Appointment appointment;
@@ -74,6 +87,7 @@ namespace Repositories.DAO
             }
             return appointment;
         }
+
 
         public int AddNew(Appointment Appointment)
         {

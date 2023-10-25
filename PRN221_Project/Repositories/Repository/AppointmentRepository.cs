@@ -16,6 +16,7 @@ namespace Repositories.Repository
         public void Delete(Appointment Appointment) => AppointmentDAO.Instance.Delete(Appointment);
 
         public IEnumerable<Appointment> GetAll() => AppointmentDAO.Instance.GetAll();
+        public IEnumerable<Appointment> GetByStudio(int studioId) => AppointmentDAO.Instance.GetByStudio(studioId);
 
         public Appointment GetByID(int id) => AppointmentDAO.Instance.GetByID(id);
 

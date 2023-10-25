@@ -8,5 +8,10 @@ namespace ArtTattooProject.Pages.StaffPage
         public void OnGet()
         {
         }
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToPage("../LoginPage.cshtml");
+        }
     }
 }

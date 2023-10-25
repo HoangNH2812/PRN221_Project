@@ -1,3 +1,23 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using Newtonsoft.Json;
+@using Repositories.Models;
+@inject IHttpContextAccessor Accessor
+@{
+    var ob = @Accessor.HttpContext.Session.GetString("account");
+    if (ob != null)
+    {
+        Account account = JsonConvert.DeserializeObject<Account>(ob);
+        if (account.ArtistId != null)
+        {
+            Layout = "_LayoutArtist";
+        }
+        else if (account.StaffId != null)
+        {
+            Layout = "_LayoutStaff";
+        }
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 }
+

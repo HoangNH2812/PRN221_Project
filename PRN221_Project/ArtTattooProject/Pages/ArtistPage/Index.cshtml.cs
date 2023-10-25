@@ -13,5 +13,11 @@ namespace ArtTattooProject.Pages.ArtistPage
         public IActionResult OnPost() {
             return RedirectToAction("Index", "SchedulesController");
         }
+
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToPage("../LoginPage.cshtml");
+        }
     }    
 }

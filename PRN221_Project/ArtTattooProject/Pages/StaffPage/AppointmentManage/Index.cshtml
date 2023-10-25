@@ -1,0 +1,82 @@
+﻿@page
+@model ArtTattooProject.Pages.StaffPage.AppointmentManage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].AppointmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].TattooLover)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Appointment)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <div>waiting</div>
+                    }
+                    else if (item.Status == 2)
+                    {
+                        <div>on going</div>
+                    }
+                    else if (item.Status == 3)
+                    {
+                        <div>done</div>
+                    }
+                    else
+                    {
+                        <div>cancel</div>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TattooLover.Email)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.AppointmentId">update status</a> |
+                    <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.Appointment.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Appointment.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Appointment.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Appointment.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

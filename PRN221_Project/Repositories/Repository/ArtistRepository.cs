@@ -16,6 +16,7 @@ namespace Repositories.Repository
         public void Delete(Artist Artist) => ArtistDAO.Instance.Delete(Artist);
 
         public IEnumerable<Artist> GetAll() => ArtistDAO.Instance.GetAll();
+        public IEnumerable<Artist> GetByStudio(int studioId) => ArtistDAO.Instance.GetByStudio(studioId);
 
         public Artist GetByID(int id) => ArtistDAO.Instance.GetByID(id);
 
