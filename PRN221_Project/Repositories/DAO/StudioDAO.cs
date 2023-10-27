@@ -59,17 +59,40 @@ namespace Repositories.DAO
             }
             return studio;
         }
-
-        public int AddNew(Studio Studio)
+        public Studio GetByName(string name)
         {
-            int id;
+            Studio studio;
             try
             {
                 var DBContext = new ArtTattooLoverContext();
+                studio = DBContext.Studios.SingleOrDefault(i => i.Name == name);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return studio;
+        }
+
+        public int AddNew(Studio Studio)
+        {
+             int id;
+            Studio tmp;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                tmp = GetByName(Studio.Name);
                // Studio.StudioId = DBContext.Studios.OrderByDescending(i => i.StudioId).First().StudioId + 1;
-                DBContext.Studios.Add(Studio);
-                DBContext.SaveChanges();
-                id = Studio.StudioId;
+               if (tmp != null)
+                {
+                    throw new Exception("name of studio has been existed");
+                }
+                else
+                {
+                    DBContext.Studios.Add(Studio);
+                    DBContext.SaveChanges();
+                    id = Studio.StudioId;
+                }
             }
             catch (Exception ex)
             {
@@ -84,6 +107,11 @@ namespace Repositories.DAO
                 Studio studio = GetByID(Studio.StudioId);
                 if (studio != null)
                 {
+                    Studio check = GetByName(Studio.Name);
+                    if (check != null)
+                    {
+                        throw new Exception("name of studio has been existed");
+                    }
                     var DBContext = new ArtTattooLoverContext();
                     DBContext.Entry<Studio>(Studio).State = EntityState.Modified;
                     DBContext.SaveChanges();

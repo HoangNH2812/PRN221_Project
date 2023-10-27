@@ -6,18 +6,19 @@ namespace ArtTattooProject.Pages.ArtistPage
     public class IndexModel : PageModel
     {
         
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return RedirectToPage("./SchedulesManage/Index");
         }
 
-        public IActionResult OnPost() {
+     /*   public IActionResult OnPost() {
             return RedirectToAction("Index", "SchedulesController");
-        }
+        }*/
 
         public IActionResult OnGetLogout()
         {
             HttpContext.Session.Clear();
-            return RedirectToPage("../LoginPage.cshtml");
+            return RedirectToPage("/LoginPage");
         }
     }    
 }

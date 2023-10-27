@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor Accessor
+@using Repositories.Models;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Newtonsoft.Json;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,18 +16,124 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ArtTattooProject</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+                @{
+                    var ob = @Accessor.HttpContext.Session.GetString("account");
+                    if (ob != null)
+                    {
+                        Account account = JsonConvert.DeserializeObject<Account>(ob);
+                        if (JsonConvert.DeserializeObject<Boolean>(@Accessor.HttpContext.Session.GetString("isAdmin")))
+                        {
+                            <a class="navbar-brand" asp-area="" asp-page="/AdminPage/Index">ArtTattooProject</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../AccountManage/Index">Account |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../StudioManage/Index">Studio |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-page="../Index" asp-page-handler="Logout">Log out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }else
+                        if (account.ArtistId != null)
+                        {
+                            <a class="navbar-brand" asp-area="" asp-page="/ArtistPage/Index">ArtTattooProject</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../DesignManage/Index">Design |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../SchedulesManage/Index">Schedules |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../CertificateManage/Index">Certificate |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../ServiceManage/Index">Service |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-page="../Index" asp-page-handler="Logout">Log out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else if (account.StaffId != null)
+                        {
+                            <a class="navbar-brand" asp-area="" asp-page="/StaffPage/Index">ArtTattooProject</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="StaffPage" asp-page="../ArtistManage/Index">Manage artist |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="StaffPage" asp-page="../AppointmentManage/Index">Manage appointment |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="nav-link text-dark">welcome @account.Username |</div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-page="../Index" asp-page-handler="Logout">Log out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else if (account.TattooLoverId != null)
+                        {
+                            <a class="navbar-brand" asp-area="" asp-page="/ArtistPage/Index">ArtTattooProject</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-page="./Cart">Cart |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-page="./Appointment">Appointment history |</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="nav-link text-dark">welcome @account.Username |</div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-page="./Index" asp-page-handler="Logout">Log out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <a class="navbar-brand" asp-area="" asp-page="/Index">ArtTattooProject</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                }
             </div>
         </nav>
     </header>

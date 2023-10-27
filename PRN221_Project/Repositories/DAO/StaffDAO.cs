@@ -60,6 +60,20 @@ namespace Repositories.DAO
             return staff;
         }
 
+        public IEnumerable<Staff> GetByStudioId(int id)
+        {
+            IEnumerable<Staff> staff;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                staff = DBContext.Staff.Where(i => i.StudioId == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return staff;
+        }
         public int AddNew(Staff Staff)
         {
             int id;

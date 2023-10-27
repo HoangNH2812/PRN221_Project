@@ -5,8 +5,14 @@ namespace ArtTattooProject.Pages.AdminPage
 {
     public class IndexModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return RedirectToPage("StudioManage/Index");
+        }
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToPage("/LoginPage");
         }
     }
 }

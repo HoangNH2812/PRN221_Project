@@ -12,6 +12,7 @@ namespace Repositories.IRepository
         public IEnumerable<Staff> GetAll();
         public Staff GetByID(int id);
         public int AddNew(Staff Staff);
+        public IEnumerable<Staff> GetByStudioId(int id);
         public void Update(Staff Staff);
         public void Delete(Staff Staff);
     }

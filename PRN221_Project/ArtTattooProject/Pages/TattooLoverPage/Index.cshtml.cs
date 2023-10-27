@@ -38,7 +38,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         public IActionResult OnGetLogout()
         {
             HttpContext.Session.Clear();
-            return RedirectToPage("../LoginPage.cshtml");
+            return RedirectToPage("/LoginPage");
         }
     }
 }

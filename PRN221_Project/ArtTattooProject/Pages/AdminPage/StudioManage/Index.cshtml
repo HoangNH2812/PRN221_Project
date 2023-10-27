@@ -1,0 +1,69 @@
+﻿@page
+@model ArtTattooProject.Pages.AdminPage.StudioManage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Studio[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Studio[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Studio[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Studio[0].Website)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Studio) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.StudioId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.StudioId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.StudioId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.Studio.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Studio.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Studio.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Studio.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

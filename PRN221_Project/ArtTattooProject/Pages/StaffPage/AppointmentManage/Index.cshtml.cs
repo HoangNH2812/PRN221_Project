@@ -47,5 +47,10 @@ namespace ArtTattooProject.Pages.StaffPage.AppointmentManage
             Appointment = PaginatedList<Appointment>.Create(
                 AppointmentList, pageIndex ?? 1, pageSize);
         }
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToPage("/LoginPage");
+        }
     }
 }

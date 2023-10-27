@@ -26,11 +26,23 @@ namespace ArtTattooProject.Pages
         {
 
         }
-
+        private Account GetAdminAccount()
+        {
+            Account admin = new Account();
+            IConfiguration config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", true, true)
+            .Build();
+            admin.Username = config["Admin:username"];
+            admin.Password = config["Admin:password"];
+            return admin;
+        }
         public IActionResult OnPost()
         {
+
             try
             {
+                Account admin = GetAdminAccount();
                 Account account;
                 account = _accountRepository.Login(Username, Password);
                 if (account != null)
@@ -48,6 +60,12 @@ namespace ArtTattooProject.Pages
                     {
                         return RedirectToPage("/TattooLoverPage/Index");
                     }
+                }
+                else if (Username == admin.Username && Password == admin.Password)
+                {
+                    HttpContext.Session.SetObjectAsJson("account", admin);
+                    HttpContext.Session.SetObjectAsJson("isAdmin",true);
+                    return RedirectToPage("/AdminPage/Index");
                 }
                 else
                 {
