@@ -63,7 +63,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             }
             else
             {
-                int index = Exists(cart, AppointmentDetail.Service.ServiceId);
+                int index = Exists(cart, AppointmentDetail.ServiceId.Value);
                 if (index == -1)
                 {
                     cart.Add(AppointmentDetail);
@@ -78,6 +78,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         }
         public IActionResult OnGetDelete(int id)
         {
+            cart = SessionHelper.GetObjectFromJson<List<AppointmentDetail>>(HttpContext.Session, "cart");
             int index = Exists(cart, id);
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
@@ -91,12 +92,13 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             appointment.TattooLoverId = HttpContext.Session.GetObjectFromJson<Account>("account").TattooLoverId;
             appointment.Status = 1;
             
-            if (cart.Count == 0 || cart==null) {
+            cart = SessionHelper.GetObjectFromJson<List<AppointmentDetail>>(HttpContext.Session, "cart");
+            
+            if (cart== null || cart.Count == 0) {
                 Msg = "No service to book now";
                 return Page();
             }
-
-            cart = SessionHelper.GetObjectFromJson<List<AppointmentDetail>>(HttpContext.Session, "cart");
+           
             int? studioID = GetStudioIDInCart(cart);
             if (studioID != null)
             {
@@ -107,7 +109,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             }
 
             int? index = ValidateTime(cart);
-            if (index == null) {
+            if (index != null) {
                 string serviceName = _serviceRepository.GetByID(cart[(int)index].ServiceId.Value).ServiceName;
                 Msg = "Schedule time of service " + serviceName + " has booked by another or deleted, please choose another schedule time";
                 return Page();

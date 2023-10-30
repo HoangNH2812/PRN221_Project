@@ -48,6 +48,7 @@ namespace ArtTattooProject.Pages
                 if (account != null)
                 {
                     HttpContext.Session.SetObjectAsJson("account", account);
+                    HttpContext.Session.SetObjectAsJson("isAdmin", false);
                     if (account.ArtistId != null)
                     {
                         return RedirectToPage("/ArtistPage/Index");

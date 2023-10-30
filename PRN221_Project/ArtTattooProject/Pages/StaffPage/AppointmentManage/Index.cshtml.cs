@@ -30,7 +30,7 @@ namespace ArtTattooProject.Pages.StaffPage.AppointmentManage
         public IQueryable<Appointment> AppointmentList { get;set; } = default!;
         public PaginatedList<Appointment> Appointment { get;set; } = default!;
 
-        public async Task OnGetAsync(int? pageIndex)
+        public void OnGet(int? pageIndex)
         {
             int staffId = HttpContext.Session.GetObjectFromJson<Account>("account").StaffId.Value;
             int studioId = _staffRepository.GetByID(staffId).StudioId.Value;

@@ -15,13 +15,17 @@ namespace ArtTattooProject.Pages.StaffPage.AppointmentManage
     {
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly ITattooLoverRepository _tattooLoverRepository;
+        private readonly IAppointmentDetailRepository _appointmentDetailRepository;
+        private readonly IScheduleRepository _scheduleRepository;
 
-        public EditModel(IAppointmentRepository appointment, ITattooLoverRepository tattooLoverRepository)
+        public EditModel(IAppointmentRepository appointment, ITattooLoverRepository tattooLoverRepository, IAppointmentDetailRepository appointmentDetailRepository, IScheduleRepository scheduleRepository)
         {
             _appointmentRepository = appointment;
             _tattooLoverRepository = tattooLoverRepository;
+            _appointmentDetailRepository = appointmentDetailRepository;
+            _scheduleRepository = scheduleRepository;
         }
-
+        public string Msg { get; set; }
         [BindProperty]
         public Appointment Appointment { get; set; } = default!;
 
@@ -38,7 +42,7 @@ namespace ArtTattooProject.Pages.StaffPage.AppointmentManage
                 return NotFound();
             }
             Appointment = appointment;
-            IEnumerable<object> status = new[] { new { Id = 1, name = "waiting" }, new { Id = 2, name = "progress" }, new { Id = 3, name = "done" }, new { Id = 4, name = "canceled" } };
+            IEnumerable<object> status = new[] { new { Id = 1, name = "waiting" }, new { Id = 2, name = "progress" }, new { Id = 3, name = "done" }, new { Id = 4, name = "canceled" }, new { Id = 5, name = "paid" } };
             ViewData["Status"] = new SelectList(status, "Id", "name");
             return Page();
         }
@@ -55,8 +59,18 @@ namespace ArtTattooProject.Pages.StaffPage.AppointmentManage
             try
             {
                 Appointment appointment = _appointmentRepository.GetByID(Appointment.AppointmentId);
+                if (appointment.Status == 4)
+                {
+                    Msg = "can not reverse canceled appointment";
+                    return OnGet(Appointment.AppointmentId);
+                }
+                if (appointment.Status == 1 &&(Appointment.Status<=4)) {
+                    Msg = "appointment must paid before";
+                    return OnGet(Appointment.AppointmentId);
+                }
                 appointment.Status=Appointment.Status;
                 _appointmentRepository.Update(appointment);
+                if (Appointment.Status == 4) ReleaseRecollection(appointment.AppointmentId);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -76,6 +90,17 @@ namespace ArtTattooProject.Pages.StaffPage.AppointmentManage
         private bool AppointmentExists(int id)
         {
           return (_appointmentRepository.GetByID(id)==null);
+        }
+
+        private void ReleaseRecollection(int appointmentId)
+        {
+            IList<AppointmentDetail> appointmentDetails = _appointmentDetailRepository.GetByAppointmentID(appointmentId).ToList();
+            foreach (AppointmentDetail item in appointmentDetails)
+            {
+                Schedule schedule = _scheduleRepository.GetByID(item.ScheduleId.Value);
+                schedule.Status = 0;
+                _scheduleRepository.Update(schedule);
+            }
         }
     }
 }

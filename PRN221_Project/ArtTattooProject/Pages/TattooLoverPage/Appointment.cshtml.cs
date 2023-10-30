@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repositories.IRepository;
 using Repositories.Models;
+using Repositories.Repository;
 
 namespace ArtTattooProject.Pages.TattooLoverPage
 {
@@ -11,11 +12,15 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IConfiguration Configuration;
         private readonly IStudioRepository _studioRepository;
-        public AppointmentModel(IAppointmentRepository appointmentRepository, IConfiguration configuration, IStudioRepository studioRepository)
+        private readonly IAppointmentDetailRepository _appointmentDetailRepository;
+        private readonly IScheduleRepository _scheduleRepository;
+        public AppointmentModel(IAppointmentRepository appointmentRepository, IConfiguration configuration, IStudioRepository studioRepository, IAppointmentDetailRepository appointmentDetailRepository, IScheduleRepository scheduleRepository)
         {
             _appointmentRepository = appointmentRepository;
             Configuration = configuration;
             _studioRepository = studioRepository;
+            _appointmentDetailRepository = appointmentDetailRepository;
+            _scheduleRepository = scheduleRepository;
         }
         public IQueryable<Appointment> AppointmentList { get; set; } = default!;
         public PaginatedList<Appointment> Appointment { get; set; } = default!;
@@ -39,7 +44,18 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             Appointment appointment = _appointmentRepository.GetByID(cancelId);
             appointment.Status = 4;
             _appointmentRepository.Update(appointment);
+            ReleaseRecollection(cancelId);
             OnGet(null);
+        }
+        private void ReleaseRecollection(int appointmentId)
+        {
+            IList<AppointmentDetail> appointmentDetails = _appointmentDetailRepository.GetByAppointmentID(appointmentId).ToList();
+            foreach (AppointmentDetail item in appointmentDetails)
+            {
+                Schedule schedule = _scheduleRepository.GetByID(item.ScheduleId.Value);
+                schedule.Status = 0;
+                _scheduleRepository.Update(schedule);
+            }
         }
     }
 }

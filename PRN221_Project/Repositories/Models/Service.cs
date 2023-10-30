@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.Models;
 
@@ -8,7 +9,7 @@ public partial class Service
     public int ServiceId { get; set; }
 
     public string? ServiceName { get; set; }
-
+    [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = false)]
     public decimal? Price { get; set; }
 
     public int? ArtistId { get; set; }

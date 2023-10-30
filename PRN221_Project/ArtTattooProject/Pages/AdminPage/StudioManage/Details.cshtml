@@ -74,11 +74,13 @@
 }
 
 <a asp-page="./Index"
+    asp-route-id="@Model.Studio.StudioId"
    asp-route-pageIndexStaff="@(Model.Staff.PageIndex - 1)"
    class="btn btn-primary @prevDisabledStaff">
     Previous
 </a>
 <a asp-page="./Index"
+   asp-route-id="@Model.Studio.StudioId"
    asp-route-pageIndexStaff="@(Model.Staff.PageIndex + 1)"
    class="btn btn-primary @nextDisabledStaff">
     Next
@@ -116,11 +118,13 @@
 }
 
 <a asp-page="./Index"
+   asp-route-id="@Model.Studio.StudioId"
    asp-route-pageIndexArtist="@(Model.Artist.PageIndex - 1)"
    class="btn btn-primary @prevDisabledArtist">
     Previous
 </a>
 <a asp-page="./Index"
+   asp-route-id="@Model.Studio.StudioId"
    asp-route-pageIndexArtist="@(Model.Artist.PageIndex + 1)"
    class="btn btn-primary @nextDisabledArtist">
     Next

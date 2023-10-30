@@ -41,12 +41,13 @@
                                     </li>
                                 </ul>
                             </div>
-                        }else
+                        }
+                        else
                         if (account.ArtistId != null)
                         {
                             <a class="navbar-brand" asp-area="" asp-page="/ArtistPage/Index">ArtTattooProject</a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                                    aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -73,7 +74,7 @@
                         {
                             <a class="navbar-brand" asp-area="" asp-page="/StaffPage/Index">ArtTattooProject</a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                                    aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -95,7 +96,7 @@
                         }
                         else if (account.TattooLoverId != null)
                         {
-                            <a class="navbar-brand" asp-area="" asp-page="/ArtistPage/Index">ArtTattooProject</a>
+                            <a class="navbar-brand" asp-area="" asp-page="/TattooLoverPage/Index">ArtTattooProject</a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.Models;
 
 public partial class AppointmentDetail
 {
     public int AppointmentDetailId { get; set; }
-
+    [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = false)]
     public decimal? Price { get; set; }
 
     public int? AppointmentId { get; set; }
