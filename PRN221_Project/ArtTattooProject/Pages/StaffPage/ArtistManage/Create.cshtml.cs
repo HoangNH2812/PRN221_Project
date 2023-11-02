@@ -40,7 +40,7 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid )
+            if (!ModelState.IsValid)
             {
                 int staffid = HttpContext.Session.GetObjectFromJson<Account>("account").StaffId.Value;
                 Staff staff = _staffRepository.GetByID(staffid);
@@ -57,7 +57,8 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
                 int artistId = _artistRepository.AddNew(Artist);
                 Account.ArtistId = artistId;
                 _accountRepository.AddNew(Account);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Msg = ex.Message;
             }

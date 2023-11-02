@@ -8,13 +8,13 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Create New staff</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Account[0].Password)
+                @Html.DisplayNameFor(model => model.Account[0].Username)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Account[0].Artist)
@@ -25,30 +25,84 @@
             <th>
                 @Html.DisplayNameFor(model => model.Account[0].TattooLover)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].Status)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Account) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Artist.ArtistId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Staff.StaffId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TattooLover.TattooLoverId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Username">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Username">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Username">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Account)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @if (item.ArtistId != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.ArtistId);
+                    }
+                    else
+                    {
+                        <div>------</div>
+                    }
+                </td>
+                <td>
+                    @if (item.StaffId != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.StaffId);
+                    }
+                    else
+                    {
+                        <div>------</div>
+                    }
+                </td>
+                <td>
+                    @if (item.TattooLoverId != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.TattooLoverId);
+                    }
+                    else
+                    {
+                        <div>------</div>
+                    }
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <div>active</div>
+                    } else
+                    {
+                        <div>inactive</div>
+                    }
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <a asp-page="./Delete" asp-route-username="@item.Username">inactive</a>
+                    }
+                    else
+                    {
+                        <a asp-page="./Delete" asp-route-username="@item.Username">active</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.Account.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Account.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Account.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Account.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

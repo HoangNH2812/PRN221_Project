@@ -38,7 +38,7 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
         {
           if (!ModelState.IsValid)
             {
-                return Page();
+                return OnGet();
             }
             try
             {
@@ -47,7 +47,7 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
             } catch (Exception ex)
             {
                 Msg = ex.Message;
-                return Page();
+                return OnGet();
             }
 
             return RedirectToPage("./Index");

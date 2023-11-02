@@ -10,8 +10,10 @@ namespace Repositories.IRepository
     public interface IAccountRepository
     {
         public Account Login(string username, string password);
+        public Account GetByUsername(string username);
         public void AddNew(Account Account);
         public void Update(Account Account);
+        public IEnumerable<Account> GetAll();
         public void Delete(Account Account);
     }
 }

@@ -57,7 +57,7 @@ Status int,
 ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID),
 )
 
---1:waiting 2:progress 3:done 4:cancel
+--1:waiting 2:progress 3:done 4:cancel 5: paid
 CREATE TABLE Appointments(
 AppointmentID int IDENTITY(1,1) primary key,
 TotalPrice money,
@@ -88,6 +88,7 @@ urllink nvarchar(255)
 CREATE TABLE Account(
 username varchar(255) primary key,
 password varchar(255) not null,
+status int not null default 1,
 TattooLoverID int foreign key (TattooLoverID) REFERENCES TattooLover(TattooLoverID) null,
 ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID) null,
 StaffID int foreign key (StaffID) REFERENCES Staff(StaffID) null,

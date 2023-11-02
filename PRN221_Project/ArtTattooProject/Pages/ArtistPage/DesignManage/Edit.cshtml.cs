@@ -50,7 +50,7 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                return OnGet(TattoosDesign.TattoosDesignId);
             }
 
             try

@@ -31,7 +31,7 @@ namespace ArtTattooProject.Pages.ArtistPage.CertificateManage
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                return OnGet();
             }
             try
             {
@@ -40,7 +40,7 @@ namespace ArtTattooProject.Pages.ArtistPage.CertificateManage
             } catch (Exception ex)
             {
                 Msg = ex.Message;
-                return Page();
+                return OnGet();
             }
             return RedirectToPage("./Index");
         }

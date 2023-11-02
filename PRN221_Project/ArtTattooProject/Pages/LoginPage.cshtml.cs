@@ -42,11 +42,20 @@ namespace ArtTattooProject.Pages
 
             try
             {
+                if (Username== null || Password==null) {
+                    Msg = "must enter username and password";
+                    return Page();
+                }
                 Account admin = GetAdminAccount();
                 Account account;
                 account = _accountRepository.Login(Username, Password);
                 if (account != null)
                 {
+                    if (account.Status == 0)
+                    {
+                        Msg = "this account has been lock, contact admin page to unlock";
+                        return Page();
+                    }
                     HttpContext.Session.SetObjectAsJson("account", account);
                     HttpContext.Session.SetObjectAsJson("isAdmin", false);
                     if (account.ArtistId != null)

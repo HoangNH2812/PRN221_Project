@@ -5,55 +5,56 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Repositories.IRepository;
 using Repositories.Models;
 
 namespace ArtTattooProject.Pages.AdminPage.AccountManage
 {
     public class DeleteModel : PageModel
     {
-        private readonly Repositories.Models.ArtTattooLoverContext _context;
+        private readonly IAccountRepository _accountRepository;
 
-        public DeleteModel(Repositories.Models.ArtTattooLoverContext context)
+        public DeleteModel(IAccountRepository accountRepository)
         {
-            _context = context;
+            _accountRepository = accountRepository;
         }
 
         [BindProperty]
       public Account Account { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public IActionResult OnGet(string username)
         {
-            if (id == null || _context.Accounts == null)
+            if (username == null )
             {
                 return NotFound();
             }
 
-            var account = await _context.Accounts.FirstOrDefaultAsync(m => m.Username == id);
+           var account = _accountRepository.GetByUsername(username);
 
             if (account == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Account = account;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public  IActionResult OnPost(string username)
         {
-            if (id == null || _context.Accounts == null)
+            if (username == null)
             {
                 return NotFound();
             }
-            var account = await _context.Accounts.FindAsync(id);
+            var account = _accountRepository.GetByUsername(username);
 
             if (account != null)
             {
                 Account = account;
-                _context.Accounts.Remove(Account);
-                await _context.SaveChangesAsync();
+                if (Account.Status==1) account.Status = 0; else account.Status = 1;
+                _accountRepository.Update(Account);
             }
 
             return RedirectToPage("./Index");

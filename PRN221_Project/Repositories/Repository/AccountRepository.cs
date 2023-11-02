@@ -12,9 +12,9 @@ namespace Repositories.Repository
     public class AccountRepository : IAccountRepository
     {
         public void AddNew(Account Account) => AccountDAO.Instance.AddNew(Account);
-
+        public Account GetByUsername(string username) => AccountDAO.Instance.GetByUsername(username);
         public void Delete(Account Account) => AccountDAO.Instance.Delete(Account);
-
+        public IEnumerable<Account> GetAll() => AccountDAO.Instance.GetAll();
         public Account Login(string username, string password) => AccountDAO.Instance.Login(username, password);
 
         public void Update(Account Account) => AccountDAO.Instance.Update(Account);

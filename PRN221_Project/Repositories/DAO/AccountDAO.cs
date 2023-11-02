@@ -59,15 +59,29 @@ namespace Repositories.DAO
             }
             return account;
         }
-
+        public Account GetByUsername(string username)
+        {
+            Account account = null;
+            try
+            {
+                var DBcontext = new ArtTattooLoverContext();
+                account = DBcontext.Accounts.FirstOrDefault(i => i.Username == username);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return account;
+        }
         public void AddNew(Account Account)
         {
             try
             {
                 var DBContext = new ArtTattooLoverContext();
                 Account tmp = DBContext.Accounts.FirstOrDefault(i => i.Username == Account.Username);
-                if (tmp != null)
+                if (tmp == null)
                 {
+                    Account.Status = 1;
                     DBContext.Accounts.Add(Account);
                     DBContext.SaveChanges();
                 }
