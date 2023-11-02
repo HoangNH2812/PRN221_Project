@@ -59,6 +59,20 @@ namespace Repositories.DAO
             }
             return certificate;
         }
+        public Certificate GetByName(string name)
+        {
+            Certificate certificate;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                certificate = DBContext.Certificates.SingleOrDefault(i => i.CertificateName.Equals(name));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return certificate;
+        }
 
         public int AddNew(Certificate Certificate)
         {
@@ -66,6 +80,10 @@ namespace Repositories.DAO
             try
             {
                 var DBContext = new ArtTattooLoverContext();
+                if (GetByName(Certificate.CertificateName) != null)
+                {
+                    throw new Exception("Certificate name has already existed");
+                }
                // Certificate.CertificateId = DBContext.Certificates.OrderByDescending(i => i.CertificateId).First().CertificateId + 1;
                 DBContext.Certificates.Add(Certificate);
                 DBContext.SaveChanges();

@@ -59,7 +59,20 @@ namespace Repositories.DAO
             }
             return style;
         }
-
+        public Style GetByName(string name)
+        {
+            Style style;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                style = DBContext.Styles.SingleOrDefault(i => i.StyleName.Equals(name));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return style;
+        }
         public int AddNew(Style Style)
         {
             int id;
@@ -84,6 +97,10 @@ namespace Repositories.DAO
                 Style style = GetByID(Style.StyleId);
                 if (style != null)
                 {
+                    if (GetByName(Style.StyleName) != null)
+                    {
+                        throw new Exception("Name has existed");
+                    }
                     var DBContext = new ArtTattooLoverContext();
                     DBContext.Entry<Style>(Style).State = EntityState.Modified;
                     DBContext.SaveChanges();

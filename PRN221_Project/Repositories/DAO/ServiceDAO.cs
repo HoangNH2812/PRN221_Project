@@ -94,6 +94,10 @@ namespace Repositories.DAO
             int id;
             try
             {
+                if (GetByName(Service.ServiceName) != null)
+                {
+                    throw new Exception("Service name has been existed");
+                }
                 var DBContext = new ArtTattooLoverContext();
               //  Service.ServiceId = DBContext.Services.OrderByDescending(i => i.ServiceId).First().ServiceId + 1;
                 DBContext.Services.Add(Service);
@@ -113,6 +117,10 @@ namespace Repositories.DAO
                 Service service = GetByID(Service.ServiceId);
                 if (service != null)
                 {
+                    if (GetByName(Service.ServiceName) != null)
+                    {
+                        throw new Exception("Service name has been existed");
+                    }
                     var DBContext = new ArtTattooLoverContext();
                     DBContext.Entry<Service>(Service).State = EntityState.Modified;
                     DBContext.SaveChanges();

@@ -14,7 +14,11 @@ public partial class Service
 
     public int? ArtistId { get; set; }
 
+    public int? TattoosDesignId { get; set; }
+
     public virtual ICollection<AppointmentDetail> AppointmentDetails { get; set; } = new List<AppointmentDetail>();
 
     public virtual Artist? Artist { get; set; }
+
+    public virtual TattoosDesign? TattoosDesign { get; set; }
 }

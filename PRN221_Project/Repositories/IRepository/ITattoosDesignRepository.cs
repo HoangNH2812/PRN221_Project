@@ -11,6 +11,7 @@ namespace Repositories.IRepository
     {
         public IEnumerable<TattoosDesign> GetAll();
         public TattoosDesign GetByID(int id);
+        public int CountByStyle(int styleID);
         public int AddNew(TattoosDesign TattoosDesign);
         public void Update(TattoosDesign TattoosDesign);
         public void Delete(TattoosDesign TattoosDesign);

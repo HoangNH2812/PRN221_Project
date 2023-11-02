@@ -40,6 +40,7 @@ ServiceID int IDENTITY(1,1) primary key,
 ServiceName nvarchar(255),
 Price money,
 ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID),
+TattoosDesignID int foreign key (TattoosDesignID) REFERENCES TattoosDesign(TattoosDesignID)
 )
 
 CREATE TABLE Staff(

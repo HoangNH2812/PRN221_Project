@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Repositories.Models;
+
 public partial class CertificateArtist
 {
     public int? CertificateId { get; set; }

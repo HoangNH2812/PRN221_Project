@@ -44,7 +44,21 @@ namespace Repositories.DAO
             }
             return list;
         }
-
+        public int CountByStyle(int styleID)
+        {
+            int count = 0;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                IEnumerable<TattoosDesign> list = DBContext.TattoosDesigns.Where(i=>i.StyleId==styleID);
+                count = list.Count();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return count;
+        }
         public TattoosDesign GetByID(int id)
         {
             TattoosDesign tattoosDesign;

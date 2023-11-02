@@ -23,7 +23,6 @@ namespace ArtTattooProject.Pages
 
         [BindProperty]
         public string confirmPassword { get; set; }
-        [BindProperty]
         public string? Msg { get; set; }
 
         public void OnGet() {
@@ -65,6 +64,8 @@ namespace ArtTattooProject.Pages
                 }
             }
             return RedirectToPage("LoginPage");
+        
+        
         }
 
     }

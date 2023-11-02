@@ -9,10 +9,12 @@ namespace ArtTattooProject.Pages.TattooLoverPage
     {
         private readonly IServiceRepository _serviceRepository;
         private readonly IConfiguration Configuration;
-        public IndexModel(IServiceRepository serviceRepository, IConfiguration configuration)
+        private readonly ITattoosDesignRepository _taxtoosDesignRepository;
+        public IndexModel(IServiceRepository serviceRepository, IConfiguration configuration, ITattoosDesignRepository tattoosDesignRepository)
         {
             _serviceRepository = serviceRepository;
             Configuration = configuration;
+            _taxtoosDesignRepository = tattoosDesignRepository;
         }
         public string CurrentFilter { get; set; }
         public PaginatedList<Service> Service { get; set; } = default!;
@@ -24,10 +26,27 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             CurrentFilter = searchString;
             if (!String.IsNullOrEmpty(searchString))
             {
-                ServiceList = _serviceRepository.GetByName(searchString).AsQueryable();
+                IEnumerable<Service> list = _serviceRepository.GetByName(searchString);
+                foreach (var item in list)
+                {
+                    if (item.TattoosDesignId != null)
+                    {
+                        item.TattoosDesign = _taxtoosDesignRepository.GetByID(item.TattoosDesignId.Value);
+                    }
+                }
+                ServiceList = list.AsQueryable();
             } else
             {
-                ServiceList = _serviceRepository.GetAll().AsQueryable();
+                IEnumerable<Service> list = _serviceRepository.GetAll();
+                foreach (var item in list)
+                {
+                    if (item.TattoosDesignId != null)
+                    {
+                        int id = item.TattoosDesignId.Value;
+                        item.TattoosDesign = _taxtoosDesignRepository.GetByID(id);
+                    }
+                }
+                ServiceList = list.AsQueryable();
             }
 
             var pageSize = Configuration.GetValue("PageSize", 4);

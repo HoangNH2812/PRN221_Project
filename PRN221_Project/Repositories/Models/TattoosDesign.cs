@@ -19,5 +19,7 @@ public partial class TattoosDesign
 
     public virtual Artist? Artist { get; set; }
 
+    public virtual ICollection<Service> Services { get; set; } = new List<Service>();
+
     public virtual Style? Style { get; set; }
 }

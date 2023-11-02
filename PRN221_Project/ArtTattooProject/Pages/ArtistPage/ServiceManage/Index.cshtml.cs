@@ -16,10 +16,12 @@ namespace ArtTattooProject.Pages.ArtistPage.ServiceManage
     {
         private readonly IServiceRepository _serviceRepository;
         private readonly IConfiguration Configuration;
-        public IndexModel(IServiceRepository serviceRepository, IConfiguration configuration)
+        private readonly ITattoosDesignRepository _taxtoosDesignRepository;
+        public IndexModel(IServiceRepository serviceRepository, IConfiguration configuration, ITattoosDesignRepository taxtoosDesignRepository)
         {
             _serviceRepository = serviceRepository;
             Configuration = configuration;
+            _taxtoosDesignRepository = taxtoosDesignRepository;
         }
 
         public IQueryable<Service> ServiceList { get;set; } = default!;
@@ -28,7 +30,15 @@ namespace ArtTattooProject.Pages.ArtistPage.ServiceManage
         public async Task OnGetAsync(int? pageIndex)
         {
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
-            ServiceList = _serviceRepository.GetByArtist(artistId).AsQueryable();
+            IEnumerable<Service> list = _serviceRepository.GetByArtist(artistId);
+            foreach (var item in list)
+            {
+                if (item.TattoosDesignId != null)
+                {
+                    item.TattoosDesign = _taxtoosDesignRepository.GetByID(item.TattoosDesignId.Value);
+                }
+            }
+            ServiceList = list.AsQueryable();
             var pageSize = Configuration.GetValue("PageSize", 4);
             Service = PaginatedList<Service>.Create(
                 ServiceList, pageIndex ?? 1, pageSize);

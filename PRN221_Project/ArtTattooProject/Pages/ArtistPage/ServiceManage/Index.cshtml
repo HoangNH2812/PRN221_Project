@@ -19,6 +19,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Service[0].Price)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].TattoosDesign)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -31,6 +34,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
+                <td>
+                    @if (item.TattoosDesignId != null)
+                    {
+                        <img src=@item.TattoosDesign.ImgUri width="286" height="135" />
+                        // Html.DisplayFor(modelItem => item.TattoosDesign.ImgUri);
+                    } else
+                    {
+                        <div>none</div>
+                    }
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ServiceId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ServiceId">Details</a> |

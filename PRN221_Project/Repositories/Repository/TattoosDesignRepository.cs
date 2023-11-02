@@ -14,7 +14,7 @@ namespace Repositories.Repository
         public int AddNew(TattoosDesign TattoosDesign) => TattoosDesignDAO.Instance.AddNew(TattoosDesign);
 
         public void Delete(TattoosDesign TattoosDesign) => TattoosDesignDAO.Instance.Delete(TattoosDesign);
-
+        public int CountByStyle(int styleID) => TattoosDesignDAO.Instance.CountByStyle(styleID);
         public IEnumerable<TattoosDesign> GetAll() => TattoosDesignDAO.Instance.GetAll();
 
         public TattoosDesign GetByID(int id) => TattoosDesignDAO.Instance.GetByID(id);

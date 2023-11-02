@@ -55,12 +55,23 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
 
                 Artist.StudioId = staff.StudioId.Value;
                 int artistId = _artistRepository.AddNew(Artist);
-                Account.ArtistId = artistId;
-                _accountRepository.AddNew(Account);
+                try
+                {
+                    Account.ArtistId = artistId;
+                    _accountRepository.AddNew(Account);
+                }
+                catch (Exception ex)
+                {
+                    Msg = ex.Message;
+                    _artistRepository.Delete(Artist);
+                    return Page();
+                }
+
             }
             catch (Exception ex)
             {
                 Msg = ex.Message;
+                return Page();
             }
 
             return RedirectToPage("./Index");

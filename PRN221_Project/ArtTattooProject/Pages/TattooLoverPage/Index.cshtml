@@ -23,6 +23,9 @@
                 @Html.DisplayNameFor(model => model.Service[0].ServiceName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Service[0].TattoosDesign)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Service[0].Price)
             </th>
             <th>
@@ -37,6 +40,13 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.ServiceName)
+                </td>
+                <td>
+                    @if (item.TattoosDesignId != null)
+                    {
+                        <img src=@item.TattoosDesign.ImgUri width="286" height="135" />
+                        // Html.DisplayFor(modelItem => item.TattoosDesign.ImgUri);
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)

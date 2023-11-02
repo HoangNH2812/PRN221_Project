@@ -8,7 +8,9 @@ public partial class Account
     public string Username { get; set; } = null!;
 
     public string Password { get; set; } = null!;
-    public int? Status { get; set; }
+
+    public int Status { get; set; }
+
     public int? TattooLoverId { get; set; }
 
     public int? ArtistId { get; set; }
