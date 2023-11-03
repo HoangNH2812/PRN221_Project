@@ -7,12 +7,14 @@ PhoneNumber nvarchar(255),
 Age int
 )  
 
+--1: active 0:inactive
 CREATE TABLE Studio(
 StudioID int IDENTITY(1,1) primary key,
 Name nvarchar(255),
 Address nvarchar(255),
 Phone nvarchar(255),
 Website nvarchar(255),
+Status int not null default 1,
 )
 
 Create TABLE Style(

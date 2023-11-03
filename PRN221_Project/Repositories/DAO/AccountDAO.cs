@@ -97,7 +97,7 @@ namespace Repositories.DAO
         {
             try
             {
-                Account account = Login(Account.Username, Account.Password);
+                Account account = GetByUsername(Account.Username);
                 if (account != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
