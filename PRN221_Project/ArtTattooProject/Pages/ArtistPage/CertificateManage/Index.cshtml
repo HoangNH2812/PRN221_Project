@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Certificate Manage";
 }
-
+<h1>Certificate</h1>
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Add New</a>
 </p>
 <table class="table">
     <thead>
@@ -14,7 +14,8 @@
                 @Html.DisplayNameFor(model => model.CertificateArtist[0].Certificate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CertificateArtist[0].Urllink)
+               @*  @Html.DisplayNameFor(model => model.CertificateArtist[0].Urllink) *@
+               Link to certificate
             </th>
             <th></th>
         </tr>
@@ -27,7 +28,8 @@
                     @Html.DisplayFor(modelItem => item.Certificate.CertificateName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Urllink)
+                    <a href="http://@item.Urllink">Click here</a>
+@*                     @Html.DisplayFor(modelItem => item.Urllink) *@
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-certId="@item.CertificateId" asp-route-artistId="@item.ArtistId">Edit</a>

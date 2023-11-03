@@ -15,22 +15,58 @@ namespace ArtTattooProject.Pages.ArtistPage.SchedulesManage
     {
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IConfiguration Configuration;
-        public IndexModel(IScheduleRepository scheduleRepository, IConfiguration configuration)
+        private readonly IAppointmentDetailRepository _appointmentDetailRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly ITattooLoverRepository _tattooLoverRepository;
+        public IndexModel(IScheduleRepository scheduleRepository,
+            IConfiguration configuration,
+            IAppointmentDetailRepository appointmentDetailRepository,
+            IAppointmentRepository appointmentRepository,
+            ITattooLoverRepository tattooLoverRepository)
         {
-           _scheduleRepository = scheduleRepository;
+            _scheduleRepository = scheduleRepository;
             Configuration = configuration;
+            _appointmentDetailRepository = appointmentDetailRepository;
+            _appointmentRepository = appointmentRepository;
+            _tattooLoverRepository = tattooLoverRepository;
         }
 
-        public IQueryable<Schedule> ScheduleList { get;set; } = default!;
-        public PaginatedList<Schedule> Schedule { get;set; } = default!;
+        public IQueryable<ScheduleMapper> ScheduleList { get; set; } = default!;
+        public PaginatedList<ScheduleMapper> Schedule { get; set; } = default!;
 
         public void OnGet(int? pageIndex)
         {
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
-            ScheduleList = _scheduleRepository.GetSchedules(artistId,null).OrderByDescending(i=>i.Time).AsQueryable();
+            IEnumerable<Schedule> schedules = _scheduleRepository.GetSchedules(artistId, null).OrderByDescending(i => i.Time);
+            List<ScheduleMapper> list = new List<ScheduleMapper>();
+            foreach (Schedule schedule in schedules)
+            {
+                if (schedule.Status == 1)
+                {
+                    AppointmentDetail detail = _appointmentDetailRepository.GetByScheduleID(schedule.ScheduleId);
+                    Appointment appointment = _appointmentRepository.GetByID(detail.AppointmentId.Value);
+                    TattooLover tattooLover = _tattooLoverRepository.GetByID(appointment.TattooLoverId.Value);
+                    list.Add(new ScheduleMapper(schedule,tattooLover));
+                }
+                else
+                {
+                    list.Add(new ScheduleMapper(schedule,null));
+                }
+            }
+            ScheduleList = list.AsQueryable();
             var pageSize = Configuration.GetValue("PageSize", 4);
-            Schedule = PaginatedList<Schedule>.Create(
+            Schedule = PaginatedList<ScheduleMapper>.Create(
                 ScheduleList, pageIndex ?? 1, pageSize);
+        }
+    }
+    public class ScheduleMapper
+    {
+        public Schedule Schedule { get; set; }
+        public TattooLover? TattooLover { get; set; }
+        public ScheduleMapper(Schedule schedule, TattooLover? tattooLover)
+        {
+            Schedule = schedule;
+            TattooLover = tattooLover;
         }
     }
 }

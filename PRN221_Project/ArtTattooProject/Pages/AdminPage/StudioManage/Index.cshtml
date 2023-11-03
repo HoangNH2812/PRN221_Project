@@ -2,10 +2,10 @@
 @model ArtTattooProject.Pages.AdminPage.StudioManage.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Studio Manage";
 }
 
-<h1>Index</h1>
+<h1>Studio Manage</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -24,6 +24,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Studio[0].Website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Studio[0].Status)
             </th>
             <th></th>
         </tr>
@@ -44,9 +47,26 @@
                 @Html.DisplayFor(modelItem => item.Website)
             </td>
             <td>
+                    @if (item.Status == 1)
+                    {
+                        <div>active</div>
+                    }
+                    else
+                    {
+                        <div>inactive</div>
+                    }
+            </td>
+            <td>
                 <a asp-page="./Edit" asp-route-id="@item.StudioId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.StudioId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.StudioId">Delete</a>
+                    @if (item.Status == 1)
+                    {
+                        <a asp-page="./Delete" asp-route-id="@item.StudioId">inactive</a>
+                    }
+                    else
+                    {
+                        <a asp-page="./Delete" asp-route-id="@item.StudioId">active</a>
+                    }
             </td>
         </tr>
 }

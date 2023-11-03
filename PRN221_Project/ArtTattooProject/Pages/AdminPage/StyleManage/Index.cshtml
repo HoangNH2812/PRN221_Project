@@ -2,10 +2,10 @@
 @model ArtTattooProject.Pages.AdminPage.StyleManage.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Style Manage";
 }
 
-<h1>Index</h1>
+<h1>Style Manage</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -32,8 +32,7 @@
                     @Html.DisplayFor(modelItem => item.Count)
                 </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Style.StyleId">Edit</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Style.StyleId">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.Style.StyleId">Edit</a>
             </td>
         </tr>
 }

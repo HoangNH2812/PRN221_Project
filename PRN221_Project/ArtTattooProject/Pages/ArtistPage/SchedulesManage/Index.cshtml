@@ -5,19 +5,22 @@
     ViewData["Title"] = "Manage Schedule";
 }
 
-<h1>Index</h1>
+<h1>Schedule</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Add new free schedule</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Schedule[0].Time)
+                @Html.DisplayNameFor(model => model.Schedule[0].Schedule.Time)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Schedule[0].Status)
+                @Html.DisplayNameFor(model => model.Schedule[0].Schedule.Status)
+            </th>
+            <th>
+                Booking user
             </th>
             <th></th>
         </tr>
@@ -26,10 +29,10 @@
 @foreach (var item in Model.Schedule) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Time)
+                    @Html.DisplayFor(modelItem => item.Schedule.Time)
             </td>
             <td>
-                    @if(item.Status == 0)
+                    @if (item.Schedule.Status == 0)
                     {
                         <div>Free</div>
                     } else
@@ -39,10 +42,16 @@
                     @* @Html.DisplayFor(modelItem => item.Status) *@
             </td>
             <td>
-                    @if (item.Status == 0)
+                    @if (item.Schedule.Status == 1)
                     {
-                        <a asp-page="./Edit" asp-route-id="@item.ScheduleId">Edit</a>
-                        <a asp-page="./Delete" asp-route-id="@item.ScheduleId">Delete</a>
+                        @Html.DisplayFor(modelItem => item.TattooLover.Email)
+                    }
+            </td>
+            <td>
+                    @if (item.Schedule.Status == 0)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Schedule.ScheduleId">Edit</a>
+                        <a asp-page="./Delete" asp-route-id="@item.Schedule.ScheduleId">Delete</a>
                     }
                 
             </td>

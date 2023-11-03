@@ -6,6 +6,7 @@ namespace Repositories.Models;
 public partial class Studio
 {
     public int StudioId { get; set; }
+    public int Status { get; set; }
 
     public string? Name { get; set; }
 

@@ -30,7 +30,7 @@ CREATE TABLE TattoosDesign(
 TattoosDesignID int IDENTITY(1,1) primary key,
 TattoosDesignName nvarchar(255),
 StyleID int foreign key (StyleID) REFERENCES Style(StyleID),
-ImgURI nvarchar(255),
+ImgURI nvarchar(2000),
 Description nvarchar(255),
 ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID)
 );
@@ -40,7 +40,7 @@ ServiceID int IDENTITY(1,1) primary key,
 ServiceName nvarchar(255),
 Price money,
 ArtistID int foreign key (ArtistID) REFERENCES Artists(ArtistID),
-TattoosDesignID int foreign key (TattoosDesignID) REFERENCES TattoosDesign(TattoosDesignID)
+TattoosDesignID int foreign key (TattoosDesignID) REFERENCES TattoosDesign(TattoosDesignID) null
 )
 
 CREATE TABLE Staff(
@@ -144,13 +144,13 @@ values
 (1,'11-1-2023',1),
 (1,'9-1-2023',1),
 (1,'12-12-2024',1)
-insert into TattoosDesign(TattoosDesignName,ArtistID,Description,StyleID)
+insert into TattoosDesign(TattoosDesignName,ArtistID,Description,StyleID,ImgURI)
 values 
-('design1',1,'Description for design1',1),
-('design2',1,'Description for design2',3),
-('design3',3,'Description for design3',3),
-('design3v2',3,'Description for design3v2',1),
-('design',2,'Description for design',2)
+('design1',1,'Description for design1',1,'https://w0.peakpx.com/wallpaper/383/361/HD-wallpaper-tatto-high-high-man-tatto-thumbnail.jpg'),
+('design2',1,'Description for design2',3,'https://thumbs.dreamstime.com/z/mendela-stencil-design-attractive-pattern-isolated-tattos-style-black-white-abstracted-illustration-242859247.jpg?w=2048'),
+('design3',3,'Description for design3',3,'https://preview.redd.it/been-thinking-of-getting-this-tatto-but-im-pretty-skeptical-v0-jlackadjhehb1.jpg?auto=webp&s=1139f1bafcdf22b7dc048be95dcc30857a3f4119'),
+('design3v2',3,'Description for design3v2',1,'https://saspacity.com/storage/images/styles/2020/07/29/image_two_1596026107512.jpg'),
+('design',2,'Description for design',2,'https://saspacity.com/storage/images/styles/2020/07/29/image_two_1596026107512.jpg')
 
 insert into Appointments(TattooLoverID,StudioID,Status,TotalPrice)
 values 

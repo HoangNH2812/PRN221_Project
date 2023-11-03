@@ -20,7 +20,7 @@ namespace ArtTattooProject.Pages.AdminPage.StudioManage
         }
 
         [BindProperty]
-      public Studio Studio { get; set; } = default!;
+        public Studio Studio { get; set; } = default!;
 
         public IActionResult OnGet(int? id)
         {
@@ -35,7 +35,7 @@ namespace ArtTattooProject.Pages.AdminPage.StudioManage
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Studio = studio;
             }
@@ -53,7 +53,15 @@ namespace ArtTattooProject.Pages.AdminPage.StudioManage
             if (studio != null)
             {
                 Studio = studio;
-                _studioRepository.Delete(Studio);   
+                if (Studio.Status == 1)
+                {
+                    Studio.Status = 0;
+                }
+                else if (Studio.Status == 0)
+                {
+                    Studio.Status = 1;
+                }
+                _studioRepository.Update(Studio);
             }
             return RedirectToPage("./Index");
         }

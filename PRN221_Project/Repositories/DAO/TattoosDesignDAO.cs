@@ -79,7 +79,7 @@ namespace Repositories.DAO
             try
             {
                 var DBContext = new ArtTattooLoverContext();
-                list = DBContext.TattoosDesigns.Where(i=>i.ArtistId == artistId);
+                list = DBContext.TattoosDesigns.Include(i=> i.Style).Where(i=>i.ArtistId == artistId);
             }
             catch (Exception ex)
             {

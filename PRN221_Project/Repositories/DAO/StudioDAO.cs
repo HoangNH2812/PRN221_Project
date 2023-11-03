@@ -108,7 +108,7 @@ namespace Repositories.DAO
                 if (studio != null)
                 {
                     Studio check = GetByName(Studio.Name);
-                    if (check != null)
+                    if (check != null && check.StudioId!=Studio.StudioId)
                     {
                         throw new Exception("name of studio has been existed");
                     }

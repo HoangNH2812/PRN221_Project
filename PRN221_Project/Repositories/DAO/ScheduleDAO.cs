@@ -88,6 +88,7 @@ namespace Repositories.DAO
               //  Schedule.ScheduleId = DBContext.Schedules.OrderByDescending(i => i.ScheduleId).First().ScheduleId + 1;
                 Schedule checkSchedule = DBContext.Schedules.SingleOrDefault(i => i.Time == Schedule.Time && i.ArtistId == Schedule.ArtistId);
                 if (checkSchedule != null) throw new Exception("date already added in schedule");
+                if (Schedule.Time < DateTime.Today) throw new Exception("Can not choose time in past");
                 DBContext.Schedules.Add(Schedule);
                 DBContext.SaveChanges();
                 id = Schedule.ScheduleId;

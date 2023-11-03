@@ -74,7 +74,20 @@ namespace Repositories.DAO
             }
             return appointmentDetail;
         }
-
+        public AppointmentDetail GetByScheduleID(int id)
+        {
+            AppointmentDetail appointmentDetail;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                appointmentDetail = DBContext.AppointmentDetails.FirstOrDefault(i => i.ScheduleId == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return appointmentDetail;
+        }
         public int AddNew(AppointmentDetail AppointmentDetail)
         {
             int id;

@@ -27,7 +27,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         public List<AppointmentDetail> appointmentDetail { get; set; }
         public decimal? Total { get; set; }
         public string Msg { get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             cart = SessionHelper.GetObjectFromJson<List<AppointmentDetail>>(HttpContext.Session, "cart");
             Total = 0;
@@ -44,11 +44,16 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                         temp.Service.Artist = _artistRepository.GetByID((int)item.Service.ArtistId);
                         temp.Schedule = _scheduleRepository.GetByID((int) item.ScheduleId);
                         temp.Service.Artist.Studio = _studioRepository.GetByID((int)temp.Service.Artist.StudioId);
+                        if (temp.Service.Artist.Studio.Status == 0)
+                        {
+                            return OnGetDelete(temp.Service.ServiceId);
+                        }
                         appointmentDetail.Add(temp);
                     }
                 }
                 HttpContext.Session.SetObjectAsJson("totalPrice", Total);
             }
+            return Page();
         }
 
         public IActionResult OnGetAddtoCart(AppointmentDetail AppointmentDetail)
@@ -105,14 +110,14 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                 appointment.StudioId = studioID.Value;
             } else {
                 Msg = "all service must from 1 studio";
-                return Page();
+                return OnGet();
             }
 
             int? index = ValidateTime(cart);
             if (index != null) {
                 string serviceName = _serviceRepository.GetByID(cart[(int)index].ServiceId.Value).ServiceName;
                 Msg = "Schedule time of service " + serviceName + " has booked by another or deleted, please choose another schedule time";
-                return Page();
+                return OnGet();
             }
 
             int id = _appointmentRepository.AddNew(appointment);
@@ -120,6 +125,9 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             {
                 appointmentDetail.AppointmentId= id;
                 _appointmentDetailRepository.AddNew(appointmentDetail);
+                Schedule schedule = _scheduleRepository.GetByID(appointmentDetail.ScheduleId.Value);
+                schedule.Status = 1;
+                _scheduleRepository.Update(schedule);
             }
             cart = null;
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);

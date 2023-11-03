@@ -44,6 +44,20 @@ namespace Repositories.DAO
             }
             return list;
         }
+        public IEnumerable<Service> GetAllAvailable()
+        {
+            IEnumerable<Service> list;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                list = DBContext.Services.Include(i => i.Artist).ThenInclude(i=>i.Studio).Where(i=>i.Artist.Studio.Status == 1);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return list;
+        }
 
         public Service GetByID(int id)
         {
@@ -66,7 +80,22 @@ namespace Repositories.DAO
             try
             {
                 var DBContext = new ArtTattooLoverContext();
-                service = DBContext.Services.Include(i => i.Artist).Where(i => i.ServiceName.Contains(name));
+                service = DBContext.Services.Include(i => i.Artist).ThenInclude(i => i.Studio).Where(i => i.Artist.Studio.Status == 1).Where(i => i.ServiceName.Contains(name));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return service;
+        }
+
+        public Service CheckName(string name,int artistId)
+        {
+            Service service;
+            try
+            {
+                var DBContext = new ArtTattooLoverContext();
+                service = DBContext.Services.SingleOrDefault(i => i.ServiceName.Equals(name) && i.ArtistId==artistId);
             }
             catch (Exception ex)
             {
@@ -94,7 +123,7 @@ namespace Repositories.DAO
             int id;
             try
             {
-                if (GetByName(Service.ServiceName) != null)
+                if (CheckName(Service.ServiceName,Service.ArtistId.Value) != null)
                 {
                     throw new Exception("Service name has been existed");
                 }
@@ -117,7 +146,7 @@ namespace Repositories.DAO
                 Service service = GetByID(Service.ServiceId);
                 if (service != null)
                 {
-                    if (GetByName(Service.ServiceName) != null)
+                    if (CheckName(Service.ServiceName, Service.ArtistId.Value) != null)
                     {
                         throw new Exception("Service name has been existed");
                     }

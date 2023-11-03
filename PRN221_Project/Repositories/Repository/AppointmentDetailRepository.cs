@@ -12,7 +12,7 @@ namespace Repositories.Repository
     public class AppointmentDetailRepository : IAppointmentDetailRepository
     {
         public int AddNew(AppointmentDetail AppointmentDetail) => AppointmentDetailDAO.Instance.AddNew(AppointmentDetail);
-
+        public AppointmentDetail GetByScheduleID(int id) => AppointmentDetailDAO.Instance.GetByScheduleID(id);
         public void Delete(AppointmentDetail AppointmentDetail) => AppointmentDetailDAO.Instance.Delete(AppointmentDetail);
 
         public IEnumerable<AppointmentDetail> GetAll() => AppointmentDetailDAO.Instance.GetAll();

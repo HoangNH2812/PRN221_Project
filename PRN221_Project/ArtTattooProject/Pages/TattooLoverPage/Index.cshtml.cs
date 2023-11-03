@@ -37,7 +37,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                 ServiceList = list.AsQueryable();
             } else
             {
-                IEnumerable<Service> list = _serviceRepository.GetAll();
+                IEnumerable<Service> list = _serviceRepository.GetAllAvailable();
                 foreach (var item in list)
                 {
                     if (item.TattoosDesignId != null)

@@ -11,6 +11,7 @@ namespace Repositories.IRepository
     {
         public IEnumerable<AppointmentDetail> GetAll();
         public AppointmentDetail GetByID(int id);
+        public AppointmentDetail GetByScheduleID(int id);
         public IEnumerable<AppointmentDetail> GetByAppointmentID(int AppointmentID);
         public int AddNew(AppointmentDetail AppointmentDetail);
         public void Update(AppointmentDetail AppointmentDetail);

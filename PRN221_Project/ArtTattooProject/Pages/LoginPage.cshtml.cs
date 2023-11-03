@@ -10,10 +10,15 @@ namespace ArtTattooProject.Pages
     public class LoginPageModel : PageModel
     {
         private readonly IAccountRepository _accountRepository;
-
-        public LoginPageModel(IAccountRepository repositoryBase)
+        private readonly IStudioRepository _studioRepository;
+        private readonly IArtistRepository _artistRepository;
+        private readonly IStaffRepository _staffRepository;
+        public LoginPageModel(IAccountRepository repositoryBase, IStudioRepository studioRepository, IArtistRepository artistRepository, IStaffRepository staffRepository)
         {
             _accountRepository = repositoryBase;
+            _studioRepository = studioRepository;
+            _artistRepository = artistRepository;
+            _staffRepository = staffRepository;
         }
         [BindProperty]
         public string Username { get; set; }
@@ -58,17 +63,28 @@ namespace ArtTattooProject.Pages
                     }
                     HttpContext.Session.SetObjectAsJson("account", account);
                     HttpContext.Session.SetObjectAsJson("isAdmin", false);
-                    if (account.ArtistId != null)
+                    if (account.TattooLoverId != null)
                     {
+                        return RedirectToPage("/TattooLoverPage/Index");
+                    } else if (account.ArtistId != null)
+                    {
+                        int studioID = _artistRepository.GetByID(account.ArtistId.Value).StudioId.Value;
+                        if (_studioRepository.GetByID(studioID).Status == 0)
+                        {
+                            Msg = "Studio you belong has been lock, contact admin for more infomation";
+                            return Page();
+                        }
                         return RedirectToPage("/ArtistPage/Index");
-                    }
-                    else if (account.StaffId != null)
-                    {
-                        return RedirectToPage("/StaffPage/Index");
                     }
                     else
                     {
-                        return RedirectToPage("/TattooLoverPage/Index");
+                        int studioID = _staffRepository.GetByID(account.StaffId.Value).StudioId.Value;
+                        if (_studioRepository.GetByID(studioID).Status == 0)
+                        {
+                            Msg = "Studio you belong has been lock, contact admin for more infomation";
+                            return Page();
+                        }
+                        return RedirectToPage("/StaffPage/Index");
                     }
                 }
                 else if (Username == admin.Username && Password == admin.Password)
@@ -79,7 +95,7 @@ namespace ArtTattooProject.Pages
                 }
                 else
                 {
-                    Msg = "Invalid";
+                    Msg = "Wrong usernane or password";
                     return Page();
                 }
             }
