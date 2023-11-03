@@ -48,7 +48,7 @@ namespace ArtTattooProject.Pages
             try
             {
                 if (Username== null || Password==null) {
-                    Msg = "must enter username and password";
+                    Msg = "Must enter username and password";
                     return Page();
                 }
                 Account admin = GetAdminAccount();

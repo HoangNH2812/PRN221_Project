@@ -18,7 +18,7 @@
                 <input asp-for="Certificate.CertificateName" class="form-control" />
                 <span asp-validation-for="Certificate.CertificateName" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group small fw-bold mt-2 pt-1 mb-0">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -26,7 +26,7 @@
 </div>
 <div>@Model.Msg</div>
 <div>
-    <a asp-page="Index">Back</a>
+    <a class="small fw-bold mt-2 pt-1 mb-0" asp-page="Index">Back</a>
 </div>
 
 @section Scripts {

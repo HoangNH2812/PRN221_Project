@@ -5,44 +5,56 @@
     ViewData["Title"] = "Certificate Manage";
 }
 
-<h1>Certificate Manage</h1>
+<div class="container">
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">Certificate Manage</h1>
+        <p>
+            <a asp-page="Create" class="btn btn-primary badge bg-success">Create New</a>
+        </p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="table-header">
+                        @Html.DisplayNameFor(model => model.Certificate[0].CertificateName)
+                    </th>
+                    <th class="table-header"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Certificate)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CertificateName)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.CertificateId" class="btn btn-success btn-xs">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @{
+            var prevDisabled = !Model.Certificate.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.Certificate.HasNextPage ? "disabled" : "";
+        }
+        <a asp-page="./Index"
+           asp-route-pageIndex="@(Model.Certificate.PageIndex - 1)"
+           class="btn btn-primary @prevDisabled">
+            Previous
+        </a>
+        <a asp-page="./Index"
+           asp-route-pageIndex="@(Model.Certificate.PageIndex + 1)"
+           class="btn btn-primary @nextDisabled">
+            Next
+        </a>
+    </div>
+</div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Certificate[0].CertificateName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Certificate) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CertificateName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.CertificateId">Edit</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-@{
-    var prevDisabled = !Model.Certificate.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.Certificate.HasNextPage ? "disabled" : "";
-}
-<a asp-page="./Index"
-   asp-route-pageIndex="@(Model.Certificate.PageIndex - 1)"
-   class="btn btn-primary @prevDisabled">
-    Previous
-</a>
-<a asp-page="./Index"
-   asp-route-pageIndex="@(Model.Certificate.PageIndex + 1)"
-   class="btn btn-primary @nextDisabled">
-    Next
-</a>
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>

@@ -5,85 +5,89 @@
     ViewData["Title"] = "Studio Manage";
 }
 
-<h1>Studio Manage</h1>
+<div class="container">
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">Studio Manage</h1>
+        <p>
+            <a asp-page="Create" class="btn btn-primary badge bg-success">Create New</a>
+        </p>
+        <table class="table table-striped" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Website</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Studio)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Website)</td>
+                        <td>
+                            @if (item.Status == 1)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">Inactive</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.StudioId">
+                                <button type="button" class="btn btn-success btn-xs">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                                    </svg>
+                                    Edit
+                                </button>
+                                </a>
+                            <a asp-page="./Details" asp-route-id="@item.StudioId">
+                                <button type="button" class="btn btn-info btn-xs">Details <span class="glyphicon glyphicon-edit"></span></button>
+                            </a>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Studio[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Studio[0].Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Studio[0].Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Studio[0].Website)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Studio[0].Status)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Studio) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Website)
-            </td>
-            <td>
-                    @if (item.Status == 1)
-                    {
-                        <div>active</div>
-                    }
-                    else
-                    {
-                        <div>inactive</div>
-                    }
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.StudioId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.StudioId">Details</a> |
-                    @if (item.Status == 1)
-                    {
-                        <a asp-page="./Delete" asp-route-id="@item.StudioId">inactive</a>
-                    }
-                    else
-                    {
-                        <a asp-page="./Delete" asp-route-id="@item.StudioId">active</a>
-                    }
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-@{
-    var prevDisabled = !Model.Studio.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.Studio.HasNextPage ? "disabled" : "";
-}
+                            @if (item.Status == 1)
+                            {
+                                <a asp-page="./Delete" asp-route-id="@item.StudioId">
+                                    <button type="button" class="btn btn-warning btn-xs">InActive <span class="glyphicon glyphicon-edit"></span></button></a>
+                            }
+                            else
+                            {
+                                <a asp-page="./Delete" asp-route-id="@item.StudioId">
+                                    <button type="button" class="btn btn-warning btn-xs">Active <span class="glyphicon glyphicon-edit"></span></button>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @{
+            var prevDisabled = !Model.Studio.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.Studio.HasNextPage ? "disabled" : "";
+        }
+        <a asp-page="./Index"
+           asp-route-pageIndex="@(Model.Studio.PageIndex - 1)"
+           class="btn btn-primary @prevDisabled">
+            Previous
+        </a>
+        <a asp-page="./Index"
+           asp-route-pageIndex="@(Model.Studio.PageIndex + 1)"
+           class="btn btn-primary @nextDisabled">
+            Next
+        </a>
+    </div>
+</div>
 
-<a asp-page="./Index"
-   asp-route-pageIndex="@(Model.Studio.PageIndex - 1)"
-   class="btn btn-primary @prevDisabled">
-    Previous
-</a>
-<a asp-page="./Index"
-   asp-route-pageIndex="@(Model.Studio.PageIndex + 1)"
-   class="btn btn-primary @nextDisabled">
-    Next
-</a>
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>

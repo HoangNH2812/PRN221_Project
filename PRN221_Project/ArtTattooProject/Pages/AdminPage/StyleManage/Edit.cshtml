@@ -19,7 +19,7 @@
                 <input asp-for="Style.StyleName" class="form-control" />
                 <span asp-validation-for="Style.StyleName" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group small fw-bold mt-2 pt-1 mb-0">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -27,7 +27,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a class="small fw-bold mt-2 pt-1 mb-0" asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {

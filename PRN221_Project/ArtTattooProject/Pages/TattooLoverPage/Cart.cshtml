@@ -3,80 +3,82 @@
 @{
     ViewData["Title"] = "Cart";
 }
-<h1>Cart</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.appointmentDetail[0].Service.Artist.Studio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.appointmentDetail[0].Service.Artist)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.appointmentDetail[0].Schedule)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.appointmentDetail[0].Schedule.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.appointmentDetail[0].Service)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.appointmentDetail[0].Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.cart != null && Model.cart.Count>0)
-        {
-            foreach (var item in Model.appointmentDetail)
+<div class="container">
+    <h1>Cart</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.appointmentDetail[0].Service.Artist.Studio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.appointmentDetail[0].Service.Artist)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.appointmentDetail[0].Schedule)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.appointmentDetail[0].Schedule.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.appointmentDetail[0].Service)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.appointmentDetail[0].Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.cart != null && Model.cart.Count > 0)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Service.Artist.Studio.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Service.Artist.Fullname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Schedule.Time)
-                    </td>
-                    <td>
-                        @if (item.Schedule.Status == 0)
-                        {
-                            <div>Free</div>
-                        } else if (item.Schedule.Status == 1)
-                        {
-                            <div>Booked</div>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Service.ServiceName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        <a asp-page="SelectSchedule" asp-route-id="@item.ServiceId">Edit</a> |
-                        <a asp-page="Cart" asp-page-handler="delete" asp-route-id="@item.ServiceId">Delete</a>
-                    </td>
-                </tr>
+                foreach (var item in Model.appointmentDetail)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Service.Artist.Studio.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Service.Artist.Fullname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Schedule.Time)
+                        </td>
+                        <td>
+                            @if (item.Schedule.Status == 0)
+                            {
+                                <div class="badge bg-success">Free</div>
+                            }
+                            else if (item.Schedule.Status == 1)
+                            {
+                                <div class="badge bg-danger">Booked</div>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            <a asp-page="SelectSchedule" asp-route-id="@item.ServiceId" class="btn btn-primary">Edit</a> |
+                            <a asp-page="Cart" asp-page-handler="delete" asp-route-id="@item.ServiceId" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
             }
-        }
-        <tr>
-            <td colspan="6" align="right">Total</td>
-            <td align="center">$@Model.Total</td>
-        </tr>
-        <tr>
-            <form method="post">
-                <input type="hidden" asp-for=@Model.Total />
-                <input type="submit" value="Check out" class="btn btn-primary" /> |
-
-            </form>
-            <a asp-page="./Index">Back</a>
-        </tr>
-    </tbody>
-</table>
-@Model.Msg
+            <tr>
+                <td colspan="6" align="right">Total</td>
+                <td align="center">$@Model.Total</td>
+            </tr>
+            <tr>
+                <form method="post">
+                    <input type="hidden" asp-for="@Model.Total" />
+                    <input type="submit" value="Check out" class="btn btn-primary" />
+                </form>
+                <a asp-page="./Index" class="btn btn-secondary">Back</a>
+            </tr>
+        </tbody>
+    </table>
+    @Model.Msg
+</div>

@@ -36,16 +36,16 @@
                 <input type="password" asp-for="confirmPassword" class="form-control" />
                 <span asp-validation-for="confirmPassword" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group small fw-bold mt-2 pt-1 mb-0">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
-    <div> @Model.Msg</div>
+    <div class="text-danger">@Model.Msg</div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back</a>
+    <a class="small fw-bold mt-2 pt-1 mb-0" asp-page="./Index">Back</a>
 </div>
 
 @section Scripts {

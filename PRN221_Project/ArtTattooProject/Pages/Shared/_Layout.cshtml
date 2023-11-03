@@ -12,6 +12,15 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ArtTattooProject.styles.css" asp-append-version="true" />
 </head>
+<style>
+    .logout-link {
+        color: #007bff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 10px;
+    }
+</style>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -31,19 +40,19 @@
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                                 <ul class="navbar-nav flex-grow-1">
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../AccountManage/Index">Account |</a>
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../AccountManage/Index">Account </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../StudioManage/Index">Studio |</a>
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../StudioManage/Index">Studio </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../CertificateManage/Index">Certificate |</a>
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../CertificateManage/Index">Certificate </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../StyleManage/Index">Style |</a>
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../StyleManage/Index">Style </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="../Index" asp-page-handler="Logout">Log out</a>
+                                        <a class="nav-link logout-link" asp-page="../Index" asp-page-handler="Logout">Log out</a>
                                     </li>
                                 </ul>
                             </div>
@@ -59,22 +68,22 @@
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                                 <ul class="navbar-nav flex-grow-1">
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../DesignManage/Index">Design |</a>
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../DesignManage/Index">Design </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../SchedulesManage/Index">Schedules |</a>
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../SchedulesManage/Index">Schedules </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../CertificateManage/Index">Certificate |</a>
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../CertificateManage/Index">Certificate </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../ServiceManage/Index">Service |</a>
+                                        <a class="nav-link text-dark" asp-area="Pages" asp-page="../ServiceManage/Index">Service </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="../MyProfile/Profile">My Profile |</a>
+                                        <a class="nav-link text-dark" asp-page="../MyProfile/Profile">My Profile </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="../Index" asp-page-handler="Logout">Log out</a>
+                                        <a class="nav-link text-dark logout-link" asp-page="../Index" asp-page-handler="Logout">Log out</a>
                                     </li>
                                 </ul>
                             </div>
@@ -89,19 +98,19 @@
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                                 <ul class="navbar-nav flex-grow-1">
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="StaffPage" asp-page="../ArtistManage/Index">Manage artist |</a>
+                                        <a class="nav-link text-dark" asp-area="StaffPage" asp-page="../ArtistManage/Index">Manage artist </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="StaffPage" asp-page="../AppointmentManage/Index">Manage appointment |</a>
+                                        <a class="nav-link text-dark" asp-area="StaffPage" asp-page="../AppointmentManage/Index">Manage appointment </a>
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link text-dark">welcome @account.Username |</div>
+                                        <div class="nav-link text-dark">welcome @account.Username </div>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="../MyProfile/Profile">My Profile |</a>
+                                        <a class="nav-link text-dark" asp-page="../MyProfile/Profile">My Profile </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="../Index" asp-page-handler="Logout">Log out</a>
+                                        <a class="nav-link text-dark logout-link" asp-page="../Index" asp-page-handler="Logout">Log out</a>
                                     </li>
                                 </ul>
                             </div>
@@ -116,19 +125,19 @@
                             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                                 <ul class="navbar-nav flex-grow-1">
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="./Cart">Cart |</a>
+                                        <a class="nav-link text-dark" asp-page="./Cart">Cart </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="./Appointment">Appointment history |</a>
+                                        <a class="nav-link text-dark" asp-page="./Appointment">Appointment history </a>
                                     </li>
                                     <li class="nav-item">
-                                        <div class="nav-link text-dark">welcome @account.Username |</div>
+                                        <div class="nav-link text-dark">welcome @account.Username </div>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="./Profile">My Profile |</a>
+                                        <a class="nav-link text-dark" asp-page="./Profile">My Profile </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-page="./Index" asp-page-handler="Logout">Log out</a>
+                                        <a class="nav-link text-dark logout-link" asp-page="./Index" asp-page-handler="Logout">Log out</a>
                                     </li>
                                 </ul>
                             </div>

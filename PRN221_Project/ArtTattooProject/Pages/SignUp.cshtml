@@ -3,9 +3,14 @@
 @{
 }
 
-<h4>Sign up</h4>
-<div class="row">
-    <div class="col-md-4">
+<div class="row vh-80">
+    <div style="position: relative;">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+             class="img-fluid position-absolute top-0 end-0"            
+             alt="Sample image">
+    </div>
+    <div class="col-md-4">   
+        <h4>Sign up</h4>
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -38,11 +43,11 @@
                 <input asp-for="TattooLover.Age" class="form-control" />
                 <span asp-validation-for="TattooLover.Age" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group classmall fw-bold mt-2 pt-1 mb-0">
                 <input type="submit" value="Sign up" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-<div> @Model.Msg</div>
-<div>Back to <a asp-page="LoginPage">Login</a></div>
+<div class="text-danger">@Model.Msg</div>
+<div class="small fw-bold mt-2 pt-1 mb-0">Back to <a asp-page="LoginPage">Login</a></div>

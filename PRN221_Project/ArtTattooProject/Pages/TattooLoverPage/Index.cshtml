@@ -4,17 +4,17 @@
     ViewData["Title"] = "TattooLover Home Page";
 }
 <div>
-<form asp-page="./Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by name:
-            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-            <input type="submit" value="Search" class="btn btn-primary" /> |
-            <a asp-page="./Index">Back to full List</a>
-        </p>
-    </div>
-</form>
-    <a asp-page="./Appointment">Appointment history</a>
+    <form asp-page="./Index" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Find by name:
+                <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+                <input type="submit" value="Search" class="btn btn-primary" /> |
+                <a asp-page="./Index" class="btn btn-secondary">Back to full List</a>
+            </p>
+        </div>
+    </form>
+    <a asp-page="./Appointment" class="btn btn-primary">Appointment history</a>
 </div>
 <h4>Service</h4>
 <table class="table">
@@ -45,8 +45,7 @@
                 <td>
                     @if (item.TattoosDesignId != null)
                     {
-                        <img src=@item.TattoosDesign.ImgUri width="286" height="135" />
-                        // Html.DisplayFor(modelItem => item.TattoosDesign.ImgUri);
+                        <img src="@item.TattoosDesign.ImgUri" width="286" height="135" />
                     }
                 </td>
                 <td>
@@ -56,7 +55,7 @@
                     @Html.DisplayFor(modelItem => item.Artist.Fullname)
                 </td>
                 <td>
-                    <a asp-page="./SelectSchedule" asp-route-id="@item.ServiceId">Select Schedule</a>
+                    <a asp-page="./SelectSchedule" asp-route-id="@item.ServiceId" class="btn btn-primary">Select Schedule</a>
                 </td>
             </tr>
         }

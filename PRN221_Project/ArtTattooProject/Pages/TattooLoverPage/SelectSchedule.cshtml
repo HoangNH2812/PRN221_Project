@@ -3,40 +3,41 @@
 @{
     ViewData["Title"] = "Book a Slot";
 }
-@if (Model.Schedule.Count==0)
-{
-    <td>This artist has no free slot to book</td>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Schedule[0].Time)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Schedule)
-            {
+<div class="container">
+    <h1>Book a Slot</h1>
+    @if (Model.Schedule.Count == 0)
+    {
+        <div class="alert alert-warning">This artist has no free slot to book</div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Time)
-                    </td>
-                    <td>
-                        <form method="post">
-                            <input type="hidden" asp-for="@Model.serviceID" value="@Model.Service.ServiceId" />
-                            <input type="hidden" asp-for="@Model.scheduleID" value="@item.ScheduleId" />
-                            <input type="submit" value="Book this schedule" class="btn btn-primary" />
-                        </form>
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Schedule[0].Time)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-<div>
-    <a asp-page="Index">Back to choose service</a>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Schedule)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Time)
+                        </td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" asp-for="@Model.serviceID" value="@Model.Service.ServiceId" />
+                                <input type="hidden" asp-for="@Model.scheduleID" value="@item.ScheduleId" />
+                                <input type="submit" value="Book this schedule" class="btn btn-primary" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    <a asp-page="Index" class="btn btn-secondary">Back to choose service</a>
 </div>

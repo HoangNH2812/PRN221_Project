@@ -35,28 +35,30 @@
                 <td>
                     @if (item.Status == 1)
                     {
-                        <div>waiting</div>
-                    } else if (item.Status == 2)
+                        <div class="badge bg-info">Waiting</div>
+                    }
+                    else if (item.Status == 2)
                     {
-                        <div>on going</div>
-                    } else if (item.Status == 3)
+                        <div class="badge bg-primary">On Going</div>
+                    }
+                    else if (item.Status == 3)
                     {
-                        <div>done</div>
+                        <div class="badge bg-success">Done</div>
                     }
                     else if (item.Status == 4)
                     {
-                        <div>cancel</div>
+                        <div class="badge bg-danger">Canceled</div>
                     }
                     else if (item.Status == 5)
                     {
-                        <div>paid</div>
+                        <div class="badge bg-secondary">Paid</div>
                     }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalPrice)
                 </td>
                 <td>
-                    <a asp-page="./AppointmentDetails" asp-route-id="@item.AppointmentId">Details</a>
+                    <a asp-page="./AppointmentDetails" asp-route-id="@item.AppointmentId" class="btn btn-info">Details</a>
                 </td>
                 <td>
                     @if (item.Status == 1)

@@ -8,7 +8,7 @@
 <h1>Account Manage</h1>
 
 <p>
-    <a asp-page="Create">Create New staff</a>
+    <a asp-page="Create" class="btn btn-primary badge bg-success">Create New staff</a>
 </p>
 <table class="table">
     <thead>
@@ -41,7 +41,8 @@
                 <td>
                     @if (item.ArtistId != null)
                     {
-                        @Html.DisplayFor(modelItem => item.ArtistId);
+                        @Html.DisplayFor(modelItem => item.ArtistId)
+                        ;
                     }
                     else
                     {
@@ -51,7 +52,8 @@
                 <td>
                     @if (item.StaffId != null)
                     {
-                        @Html.DisplayFor(modelItem => item.StaffId);
+                        @Html.DisplayFor(modelItem => item.StaffId)
+                        ;
                     }
                     else
                     {
@@ -61,7 +63,8 @@
                 <td>
                     @if (item.TattooLoverId != null)
                     {
-                        @Html.DisplayFor(modelItem => item.TattooLoverId);
+                        @Html.DisplayFor(modelItem => item.TattooLoverId)
+                        ;
                     }
                     else
                     {
@@ -71,20 +74,21 @@
                 <td>
                     @if (item.Status == 1)
                     {
-                        <div>active</div>
-                    } else
+                        <div class="badge bg-success">active</div>
+                    }
+                    else
                     {
-                        <div>inactive</div>
+                        <div class="badge bg-warning">inactive</div>
                     }
                 </td>
                 <td>
                     @if (item.Status == 1)
                     {
-                        <a asp-page="./Delete" asp-route-username="@item.Username">inactive</a>
+                        <a asp-page="./Delete" asp-route-username="@item.Username" class="btn btn-warning btn-xs">inactive</a>
                     }
                     else
                     {
-                        <a asp-page="./Delete" asp-route-username="@item.Username">active</a>
+                        <a asp-page="./Delete" asp-route-username="@item.Username" class="btn btn-success btn-xs">active</a>
                     }
                 </td>
             </tr>
