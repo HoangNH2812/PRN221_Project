@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repositories.IRepository;
 using Repositories.Models;
 
-namespace ArtTattooProject.Pages.ArtistPage
+namespace ArtTattooProject.Pages.ArtistPage.MyProfile
 {
     public class ProfileModel : PageModel
     {

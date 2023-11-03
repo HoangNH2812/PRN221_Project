@@ -7,7 +7,7 @@ namespace Repositories.Models;
 public partial class Service
 {
     public int ServiceId { get; set; }
-
+    [MinLength(6), MaxLength(50)]
     public string? ServiceName { get; set; }
     [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = false)]
     public decimal? Price { get; set; }

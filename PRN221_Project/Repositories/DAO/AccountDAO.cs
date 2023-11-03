@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Repositories.DAO
@@ -81,6 +82,13 @@ namespace Repositories.DAO
                 Account tmp = DBContext.Accounts.FirstOrDefault(i => i.Username == Account.Username);
                 if (tmp == null)
                 {
+                    var expectedPasswordPattern = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+
+                    var isValidPassword = expectedPasswordPattern.IsMatch(Account.Password);
+                    if (!isValidPassword)
+                    {
+                        throw new Exception("Password must have an upcase character, a number and one special character");
+                    }
                     Account.Status = 1;
                     DBContext.Accounts.Add(Account);
                     DBContext.SaveChanges();
@@ -101,6 +109,13 @@ namespace Repositories.DAO
                 if (account != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
+                    var expectedPasswordPattern = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+
+                    var isValidPassword = expectedPasswordPattern.IsMatch(Account.Password);
+                    if (!isValidPassword)
+                    {
+                        throw new Exception("Password must have an upcase character, a number and one special character");
+                    }
                     DBContext.Entry<Account>(Account).State = EntityState.Modified;
                     DBContext.SaveChanges();
                 }

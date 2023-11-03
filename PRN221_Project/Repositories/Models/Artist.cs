@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Repositories.Models;
 
 public partial class Artist
 {
     public int ArtistId { get; set; }
-
+    [MinLength(8), MaxLength(30)]
     public string? Fullname { get; set; }
 
     public string? Phone { get; set; }
