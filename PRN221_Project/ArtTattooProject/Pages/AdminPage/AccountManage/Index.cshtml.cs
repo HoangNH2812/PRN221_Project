@@ -31,19 +31,19 @@ namespace ArtTattooProject.Pages.AdminPage.AccountManage
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             else
             {
                 string isAdmin = HttpContext.Session.GetString("isAdmin");
                 if (isAdmin == null || isAdmin == "")
                 {
-                    return RedirectToPage("../LoginPage");
+                    return RedirectToPage("/LoginPage");
                 }
                 bool isADMIN = JsonConvert.DeserializeObject<Boolean>(isAdmin);
                 if (!isADMIN)
                 {
-                    return RedirectToPage("../LoginPage");
+                    return RedirectToPage("/LoginPage");
                 }
             }
             AccountList = _accountRepository.GetAll().AsQueryable();

@@ -30,10 +30,10 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             } else if (account.TattooLoverId == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             int TattooLoverID = HttpContext.Session.GetObjectFromJson<Account>("account").TattooLoverId.Value;
             AppointmentList = _appointmentRepository.GetByTattooLover(TattooLoverID).AsQueryable();

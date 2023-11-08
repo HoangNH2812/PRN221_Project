@@ -23,11 +23,11 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             else if (account.TattooLoverId == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             Service = _serviceRepository.GetByID(id);
             int artistID; 

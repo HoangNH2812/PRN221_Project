@@ -27,11 +27,11 @@ namespace ArtTattooProject.Pages.ArtistPage.ServiceManage
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             else if (account.ArtistId == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
             List<TattoosDesign> tattoosDesignsList = _taxtoosDesignRepository.GetByArtist(artistId).ToList();

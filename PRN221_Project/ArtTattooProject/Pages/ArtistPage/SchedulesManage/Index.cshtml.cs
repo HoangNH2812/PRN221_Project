@@ -39,11 +39,11 @@ namespace ArtTattooProject.Pages.ArtistPage.SchedulesManage
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             else if (account.ArtistId == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
             IEnumerable<Schedule> schedules = _scheduleRepository.GetSchedules(artistId, null).OrderByDescending(i => i.Time);

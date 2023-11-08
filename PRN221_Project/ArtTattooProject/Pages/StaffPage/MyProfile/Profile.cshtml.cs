@@ -29,11 +29,11 @@ namespace ArtTattooProject.Pages.StaffPage.MyProfile
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             else if (account.StaffId == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             int id = HttpContext.Session.GetObjectFromJson<Account>("account").StaffId.Value;
             Staff = _staffRepository.GetByID(id);

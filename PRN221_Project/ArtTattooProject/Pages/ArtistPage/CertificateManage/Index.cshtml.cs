@@ -23,11 +23,11 @@ namespace ArtTattooProject.Pages.ArtistPage.CertificateManage
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             else if (account.ArtistId == null)
             {
-                return RedirectToPage("../LoginPage");
+                return RedirectToPage("/LoginPage");
             }
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
             CertificateArtistList = _certificateArtistRepository.GetByArtistID(artistId).AsQueryable();
