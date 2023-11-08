@@ -34,8 +34,17 @@ namespace ArtTattooProject.Pages.ArtistPage.SchedulesManage
         public IQueryable<ScheduleMapper> ScheduleList { get; set; } = default!;
         public PaginatedList<ScheduleMapper> Schedule { get; set; } = default!;
 
-        public void OnGet(int? pageIndex)
+        public IActionResult OnGet(int? pageIndex)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.ArtistId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
             IEnumerable<Schedule> schedules = _scheduleRepository.GetSchedules(artistId, null).OrderByDescending(i => i.Time);
             List<ScheduleMapper> list = new List<ScheduleMapper>();
@@ -57,6 +66,8 @@ namespace ArtTattooProject.Pages.ArtistPage.SchedulesManage
             var pageSize = Configuration.GetValue("PageSize", 4);
             Schedule = PaginatedList<ScheduleMapper>.Create(
                 ScheduleList, pageIndex ?? 1, pageSize);
+
+            return Page();
         }
     }
     public class ScheduleMapper

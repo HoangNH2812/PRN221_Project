@@ -23,6 +23,15 @@ namespace ArtTattooProject.Pages.ArtistPage.CertificateManage
         public string Msg { get; set; }
         public IActionResult OnGet()
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.ArtistId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             ViewData["CertificateName"] = new SelectList(_certificateRepository.GetAll(), "CertificateId", "CertificateName");
             return Page();
         }

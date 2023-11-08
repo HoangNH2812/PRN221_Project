@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArtTattooProject.Pages.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +30,17 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
         public PaginatedList<Service> Service { get; set; } = default!;
         public IQueryable<TattoosDesign> TattoosDesignList { get; set; } = default!;
         public PaginatedList<TattoosDesign> TattoosDesign { get; set; } = default!;
-        public void OnGet(int? id, int? pageIndexService, int? pageIndexTattoosDesign)
+        public IActionResult OnGet(int? id, int? pageIndexService, int? pageIndexTattoosDesign)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.StaffId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             int artistId = id.Value;
             Artist = _artistRepository.GetByID(artistId);
 
@@ -42,6 +52,7 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
             TattoosDesignList = _tattoosDesignRepository.GetByArtist(artistId).AsQueryable();
             TattoosDesign = PaginatedList<TattoosDesign>.Create(
                 TattoosDesignList, pageIndexTattoosDesign ?? 1, pageSize);
+            return Page();
         }
     }
 }

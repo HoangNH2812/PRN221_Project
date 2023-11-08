@@ -27,9 +27,40 @@ namespace ArtTattooProject.Pages
         public string Password { get; set; }
 
         public string Msg { get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return Page();
+            }
+            else
+            {
+                if (account.ArtistId!=null)
+                {
+                    return RedirectToPage("ArtistPage/Index");
+                }
+                if (account.StaffId!=null)
+                {
+                    return RedirectToPage("StaffPage/Index");
+                }
+                if (account.TattooLoverId!=null) {
+                    return RedirectToPage("TattooLoverPage/Index");
+                }
+                string isAdmin = HttpContext.Session.GetString("isAdmin");
+                if (isAdmin == null || isAdmin == "")
+                {
+                    return Page();
+                } else
+                {
+                    bool isADMIN = JsonConvert.DeserializeObject<Boolean>(isAdmin);
+                    if (isADMIN)
+                    {
+                        return RedirectToPage("AdminPage/Index");
+                    }
+                }
+            }
+            return Page();
         }
         private Account GetAdminAccount()
         {

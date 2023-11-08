@@ -25,8 +25,16 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         public IQueryable<Appointment> AppointmentList { get; set; } = default!;
         public PaginatedList<Appointment> Appointment { get; set; } = default!;
 
-        public void OnGet(int? pageIndex)
+        public IActionResult OnGet(int? pageIndex)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            } else if (account.TattooLoverId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             int TattooLoverID = HttpContext.Session.GetObjectFromJson<Account>("account").TattooLoverId.Value;
             AppointmentList = _appointmentRepository.GetByTattooLover(TattooLoverID).AsQueryable();
             foreach (var item in AppointmentList)
@@ -36,6 +44,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             var pageSize = Configuration.GetValue("PageSize", 4);
             Appointment = PaginatedList<Appointment>.Create(
                 AppointmentList, pageIndex ?? 1, pageSize);
+            return Page();
         }
         [BindProperty]
         public int cancelId { get; set; }

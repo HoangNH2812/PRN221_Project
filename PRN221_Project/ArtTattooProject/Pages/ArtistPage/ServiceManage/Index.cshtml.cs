@@ -27,8 +27,17 @@ namespace ArtTattooProject.Pages.ArtistPage.ServiceManage
         public IQueryable<Service> ServiceList { get;set; } = default!;
         public PaginatedList<Service> Service { get;set; } = default!;
 
-        public async Task OnGetAsync(int? pageIndex)
+        public IActionResult OnGetAsync(int? pageIndex)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.ArtistId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
             IEnumerable<Service> list = _serviceRepository.GetByArtist(artistId);
             foreach (var item in list)
@@ -42,6 +51,8 @@ namespace ArtTattooProject.Pages.ArtistPage.ServiceManage
             var pageSize = Configuration.GetValue("PageSize", 4);
             Service = PaginatedList<Service>.Create(
                 ServiceList, pageIndex ?? 1, pageSize);
+
+            return Page();
         }
     }
 }

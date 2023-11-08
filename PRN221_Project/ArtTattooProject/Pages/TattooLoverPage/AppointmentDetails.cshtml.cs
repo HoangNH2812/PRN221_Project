@@ -1,3 +1,4 @@
+using ArtTattooProject.Pages.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repositories.IRepository;
@@ -20,8 +21,17 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         }
         public IList<AppointmentDetail> AppointmentDetail { get; set; } = default!;
         public decimal totalPrice {  get; set; }
-        public void OnGet(int? id)
+        public IActionResult OnGet(int? id)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.TattooLoverId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             totalPrice = _appointmentRepository.GetByID(id.Value).TotalPrice.Value;
             AppointmentDetail = _appointmentDetailRepository.GetByAppointmentID(id.Value).ToList();
             foreach (var appointmentDetail in AppointmentDetail)
@@ -29,6 +39,8 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                 appointmentDetail.Service = _serviceRepository.GetByID(appointmentDetail.ServiceId.Value);
                 appointmentDetail.Schedule = _scheduleRepository.GetByID(appointmentDetail.ScheduleId.Value);
             }
+
+            return Page();
         }
     }
 }

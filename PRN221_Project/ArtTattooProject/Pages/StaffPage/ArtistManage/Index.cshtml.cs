@@ -27,8 +27,17 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
         public IQueryable<Artist> ArtistList { get;set; } = default!;
         public PaginatedList<Artist> Artist { get;set; } = default!;
 
-        public void OnGet(int? pageIndex)
+        public IActionResult OnGet(int? pageIndex)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.StaffId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             int StaffId = HttpContext.Session.GetObjectFromJson<Account>("account").StaffId.Value;
             Staff staff = _staffRepository.GetByID(StaffId);
             ArtistList = _artistRepository.GetByStudio(staff.StudioId.Value).AsQueryable();
@@ -36,6 +45,8 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
             var pageSize = Configuration.GetValue("PageSize", 4);
             Artist = PaginatedList<Artist>.Create(
                 ArtistList, pageIndex ?? 1, pageSize);
+
+            return Page();
         }
     }
 }

@@ -29,6 +29,15 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         public string Msg { get; set; }
         public IActionResult OnGet()
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.TattooLoverId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             cart = SessionHelper.GetObjectFromJson<List<AppointmentDetail>>(HttpContext.Session, "cart");
             Total = 0;
             appointmentDetail = new List<AppointmentDetail>();

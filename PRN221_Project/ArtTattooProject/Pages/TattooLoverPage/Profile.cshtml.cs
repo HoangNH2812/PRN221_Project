@@ -27,6 +27,15 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         public TattooLover TattooLover { get; set; }
         public IActionResult OnGet()
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.TattooLoverId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             int id = HttpContext.Session.GetObjectFromJson<Account>("account").TattooLoverId.Value;
             TattooLover = _tattooLoverRepository.GetByID(id);
             return Page();

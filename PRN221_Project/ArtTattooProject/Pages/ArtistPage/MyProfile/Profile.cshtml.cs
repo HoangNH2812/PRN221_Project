@@ -26,6 +26,15 @@ namespace ArtTattooProject.Pages.ArtistPage.MyProfile
         public Artist Artist { get; set; }
         public IActionResult OnGet()
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.ArtistId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             int id = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
             Artist = _artistRepository.GetByID(id);
             return Page();

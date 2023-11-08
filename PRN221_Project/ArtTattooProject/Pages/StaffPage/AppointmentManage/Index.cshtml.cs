@@ -30,8 +30,17 @@ namespace ArtTattooProject.Pages.StaffPage.AppointmentManage
         public IQueryable<Appointment> AppointmentList { get;set; } = default!;
         public PaginatedList<Appointment> Appointment { get;set; } = default!;
 
-        public void OnGet(int? pageIndex)
+        public IActionResult OnGet(int? pageIndex)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.StaffId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             int staffId = HttpContext.Session.GetObjectFromJson<Account>("account").StaffId.Value;
             int studioId = _staffRepository.GetByID(staffId).StudioId.Value;
             Studio studio = _studioRepository.GetByID(studioId);
@@ -46,6 +55,8 @@ namespace ArtTattooProject.Pages.StaffPage.AppointmentManage
             var pageSize = Configuration.GetValue("PageSize", 4);
             Appointment = PaginatedList<Appointment>.Create(
                 AppointmentList, pageIndex ?? 1, pageSize);
+
+            return Page();
         }
         public IActionResult OnGetLogout()
         {

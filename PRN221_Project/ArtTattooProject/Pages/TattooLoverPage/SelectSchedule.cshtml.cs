@@ -1,3 +1,4 @@
+using ArtTattooProject.Pages.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repositories.IRepository;
@@ -19,6 +20,15 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         public Service Service { get; set; }
         public IActionResult OnGet(int id)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.TattooLoverId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             Service = _serviceRepository.GetByID(id);
             int artistID; 
             if (Service.ArtistId == null)

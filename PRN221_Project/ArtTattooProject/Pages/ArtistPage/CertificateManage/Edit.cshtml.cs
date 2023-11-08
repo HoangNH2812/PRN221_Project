@@ -1,3 +1,4 @@
+using ArtTattooProject.Pages.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,15 @@ namespace ArtTattooProject.Pages.ArtistPage.CertificateManage
 
         public IActionResult OnGet(int? certId, int? artistId)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.ArtistId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             if (certId != null && artistId != null)
             {
                 CertificateArtist = _certificateArtistRepository.GetCertificateArtist(certId.Value, artistId.Value);

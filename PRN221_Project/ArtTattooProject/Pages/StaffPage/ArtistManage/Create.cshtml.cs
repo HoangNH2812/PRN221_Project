@@ -28,6 +28,15 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
 
         public IActionResult OnGet()
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.StaffId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             return Page();
         }
         public string Msg { get; set; }

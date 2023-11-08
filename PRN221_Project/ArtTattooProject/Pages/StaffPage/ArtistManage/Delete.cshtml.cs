@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArtTattooProject.Pages.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,15 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (account == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else if (account.StaffId == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
             if (id == null)
             {
                 return NotFound();

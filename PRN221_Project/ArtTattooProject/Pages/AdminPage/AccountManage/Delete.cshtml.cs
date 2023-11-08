@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArtTattooProject.Pages.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Repositories.IRepository;
 using Repositories.Models;
 
@@ -24,6 +26,25 @@ namespace ArtTattooProject.Pages.AdminPage.AccountManage
 
         public IActionResult OnGet(string username)
         {
+            Account accountAuthen = HttpContext.Session.GetObjectFromJson<Account>("account");
+            if (accountAuthen == null)
+            {
+                return RedirectToPage("../LoginPage");
+            }
+            else
+            {
+                string isAdmin = HttpContext.Session.GetString("isAdmin");
+                if (isAdmin == null || isAdmin == "")
+                {
+                    return RedirectToPage("../LoginPage");
+                }
+                bool isADMIN = JsonConvert.DeserializeObject<Boolean>(isAdmin);
+                if (!isADMIN)
+                {
+                    return RedirectToPage("../LoginPage");
+                }
+            }
+
             if (username == null )
             {
                 return NotFound();
