@@ -1,55 +1,68 @@
 ﻿@page
 @model ArtTattooProject.Pages.ArtistPage.CertificateManage.IndexModel
+
 @{
     ViewData["Title"] = "Certificate Manage";
 }
-<h1>Certificate</h1>
-<p>
-    <a asp-page="Create">Add New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CertificateArtist[0].Certificate)
-            </th>
-            <th>
-               @*  @Html.DisplayNameFor(model => model.CertificateArtist[0].Urllink) *@
-               Link to certificate
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.CertificateArtist)
-        {
+
+<div class="container">
+    <h1>Certificate</h1>
+    <p>
+        <a asp-page="Create" class="btn btn-primary badge bg-success">Add New</a>
+    </p>
+    <table class="table table-striped" style="width: 100%">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Certificate.CertificateName)
-                </td>
-                <td>
-                    <a href="http://@item.Urllink">Click here</a>
-@*                     @Html.DisplayFor(modelItem => item.Urllink) *@
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-certId="@item.CertificateId" asp-route-artistId="@item.ArtistId">Edit</a>
-                    <a asp-page="./Delete" asp-route-CertificateId="@item.CertificateId" asp-route-ArtistId="@item.ArtistId">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.CertificateArtist[0].Certificate.CertificateName)
+                </th>
+                <th>
+                    Link to certificate
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-@{
-    var prevDisabled = !Model.CertificateArtist.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.CertificateArtist.HasNextPage ? "disabled" : "";
-}
-<a asp-page="./Index"
-   asp-route-pageIndex="@(Model.CertificateArtist.PageIndex - 1)"
-   class="btn btn-primary @prevDisabled">
-    Previous
-</a>
-<a asp-page="./Index"
-   asp-route-pageIndex="@(Model.CertificateArtist.PageIndex + 1)"
-   class="btn btn-primary @nextDisabled">
-    Next
-</a>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CertificateArtist)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Certificate.CertificateName)
+                    </td>
+                    <td>
+                        <a href="http://@item.Urllink" class="btn btn-link">Click here</a>
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-certId="@item.CertificateId" asp-route-artistId="@item.ArtistId" class="btn btn-success btn-xs">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                            </svg>
+                            Edit
+                        </a>
+                        <a asp-page="./Delete" asp-route-CertificateId="@item.CertificateId" asp-route-ArtistId="@item.ArtistId" class="btn btn-danger btn-xs">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @{
+        var prevDisabled = !Model.CertificateArtist.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.CertificateArtist.HasNextPage ? "disabled" : "";
+    }
+    <a asp-page="./Index"
+       asp-route-pageIndex="@(Model.CertificateArtist.PageIndex - 1)"
+       class="btn btn-primary @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./Index"
+       asp-route-pageIndex="@(Model.CertificateArtist.PageIndex + 1)"
+       class="btn btn-primary @nextDisabled">
+        Next
+    </a>
+</div>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>

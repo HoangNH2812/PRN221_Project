@@ -5,33 +5,32 @@
     ViewData["Title"] = "Create";
 }
 
-
-<h4>Artist's Certificate'</h4>
+<h4 class="mt-4">Artist's Certificate</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CertificateArtist.CertificateId" class="control-label"></label>
+                <label asp-for="CertificateArtist.CertificateId" class="control-label">Certificate</label>
                 <select asp-for="CertificateArtist.CertificateId" class="form-control" asp-items="ViewBag.CertificateName"></select>
             </div>
             <div class="form-group">
-                <label asp-for="CertificateArtist.Urllink" class="control-label"></label>
+                <label asp-for="CertificateArtist.Urllink" class="control-label">Certificate Link</label>
                 <input asp-for="CertificateArtist.Urllink" class="form-control" />
                 <span asp-validation-for="CertificateArtist.Urllink" class="text-danger"></span>
             </div>
-            <br/>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary">Create</button>
             </div>
-            <div> @Model.Msg</div>
+            <div class="text-danger">@Model.Msg</div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back</a>
+<div class="mt-2">
+    <a asp-page="Index" class="btn btn-secondary">Back</a>
 </div>
 
 @section Scripts {
