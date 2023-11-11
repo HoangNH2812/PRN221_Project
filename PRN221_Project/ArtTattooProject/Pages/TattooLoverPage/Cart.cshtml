@@ -61,7 +61,7 @@
                             @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
-                            <a asp-page="SelectSchedule" asp-route-id="@item.ServiceId" class="btn btn-primary">Edit</a> |
+                            <a asp-page="SelectSchedule" asp-route-id="@item.ServiceId" class="btn btn-primary">Edit</a> 
                             <a asp-page="Cart" asp-page-handler="delete" asp-route-id="@item.ServiceId" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>

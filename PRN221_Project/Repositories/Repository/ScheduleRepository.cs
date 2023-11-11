@@ -20,6 +20,6 @@ namespace Repositories.Repository
         public Schedule GetByID(int id) => ScheduleDAO.Instance.GetByID(id);
 
         public void Update(Schedule Schedule) => ScheduleDAO.Instance.Update(Schedule);
-        public IEnumerable<Schedule> GetSchedules(int artistID, int? status) => ScheduleDAO.Instance.GetSchedules(artistID, status);
+        public IEnumerable<Schedule> GetSchedules(int artistID, int? status, bool havePast) => ScheduleDAO.Instance.GetSchedules(artistID, status, havePast);
     }
 }

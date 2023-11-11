@@ -59,7 +59,7 @@ namespace Repositories.DAO
             }
             return schedule;
         }
-        public IEnumerable<Schedule> GetSchedules(int artistID, int? status)
+        public IEnumerable<Schedule> GetSchedules(int artistID, int? status, bool havePast)
         {
             IEnumerable<Schedule> list;
             try
@@ -67,10 +67,24 @@ namespace Repositories.DAO
                 var DBContext = new ArtTattooLoverContext();
                 if (status == null)
                 {
-                    list = DBContext.Schedules.Where(i => i.ArtistId == artistID);
+                    if (!havePast)
+                    {
+                        list = DBContext.Schedules.Where(i => i.ArtistId == artistID && i.Time > DateTime.Today);
+                    } else
+                    {
+                        list = DBContext.Schedules.Where(i => i.ArtistId == artistID);
+                    }
+                   
                 } else
                 {
-                    list = DBContext.Schedules.Where(i => i.ArtistId == artistID && i.Status == status);
+                    if (!havePast)
+                    {
+                        list = DBContext.Schedules.Where(i => i.ArtistId == artistID && i.Status == status && i.Time > DateTime.Today);
+                    } else
+                    {
+                        list = DBContext.Schedules.Where(i => i.ArtistId == artistID);
+                    }
+                   
                 }
             }
             catch (Exception ex)

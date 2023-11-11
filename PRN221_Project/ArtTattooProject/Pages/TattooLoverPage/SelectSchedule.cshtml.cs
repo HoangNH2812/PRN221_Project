@@ -36,7 +36,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                 return NotFound();
             }
             else { artistID = Service.ArtistId.Value; }
-            Schedule = _scheduleRepository.GetSchedules(artistID, 0).ToList();
+            Schedule = _scheduleRepository.GetSchedules(artistID, 0, false).ToList();
             return Page();
         }
 

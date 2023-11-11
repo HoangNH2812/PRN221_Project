@@ -11,7 +11,7 @@ namespace Repositories.IRepository
     {
         public IEnumerable<Schedule> GetAll();
         public Schedule GetByID(int id);
-        public IEnumerable<Schedule> GetSchedules(int artistID, int? status);
+        public IEnumerable<Schedule> GetSchedules(int artistID, int? status, bool havePast);
         public int AddNew(Schedule Schedule);
         public void Update(Schedule Schedule);
         public void Delete(Schedule Schedule);

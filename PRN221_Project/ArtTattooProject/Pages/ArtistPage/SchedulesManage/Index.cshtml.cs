@@ -46,7 +46,7 @@ namespace ArtTattooProject.Pages.ArtistPage.SchedulesManage
                 return RedirectToPage("/LoginPage");
             }
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
-            IEnumerable<Schedule> schedules = _scheduleRepository.GetSchedules(artistId, null).OrderByDescending(i => i.Time);
+            IEnumerable<Schedule> schedules = _scheduleRepository.GetSchedules(artistId, null, true).OrderByDescending(i => i.Time);
             List<ScheduleMapper> list = new List<ScheduleMapper>();
             foreach (Schedule schedule in schedules)
             {
