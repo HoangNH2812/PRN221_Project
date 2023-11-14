@@ -71,7 +71,7 @@ namespace ArtTattooProject.Pages.ArtistPage.ServiceManage
             catch (Exception ex)
             {
                 Msg = ex.Message;
-                return Page();
+                return OnGet(id);
             }
 
             return RedirectToPage("./Index");

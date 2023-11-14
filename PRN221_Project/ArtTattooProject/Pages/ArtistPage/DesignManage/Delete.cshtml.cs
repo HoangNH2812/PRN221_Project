@@ -25,7 +25,7 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
         [BindProperty]
         public TattoosDesign TattoosDesign { get; set; } = default!;
         public string Msg { get; set; }
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
@@ -74,7 +74,7 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
             catch (Exception ex)
             {
                 Msg = ex.Message;
-                return Page();
+                return OnGet(id);
             }
 
 
