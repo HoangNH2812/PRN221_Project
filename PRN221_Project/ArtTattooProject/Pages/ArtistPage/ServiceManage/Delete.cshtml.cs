@@ -21,9 +21,9 @@ namespace ArtTattooProject.Pages.ArtistPage.ServiceManage
         }
 
         [BindProperty]
-      public Service Service { get; set; } = default!;
-
-        public  IActionResult OnGet(int? id)
+        public Service Service { get; set; } = default!;
+        public string Msg { get; set; }
+        public IActionResult OnGet(int? id)
         {
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
             if (account == null)
@@ -45,24 +45,33 @@ namespace ArtTattooProject.Pages.ArtistPage.ServiceManage
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Service = service;
             }
             return Page();
         }
 
-        public  IActionResult OnPost(int? id)
+        public IActionResult OnPost(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var service = _serviceRepository.GetByID(id.Value);
 
-            if (service != null)
+            try
             {
-                _serviceRepository.Delete(service);
+                var service = _serviceRepository.GetByID(id.Value);
+
+                if (service != null)
+                {
+                    _serviceRepository.Delete(service);
+                }
+            }
+            catch (Exception ex)
+            {
+                Msg = ex.Message;
+                return Page();
             }
 
             return RedirectToPage("./Index");

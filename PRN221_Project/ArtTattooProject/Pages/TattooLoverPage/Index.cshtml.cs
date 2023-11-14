@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repositories.IRepository;
 using Repositories.Models;
+using System.Collections.Generic;
 
 namespace ArtTattooProject.Pages.TattooLoverPage
 {
@@ -11,11 +12,13 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         private readonly IServiceRepository _serviceRepository;
         private readonly IConfiguration Configuration;
         private readonly ITattoosDesignRepository _taxtoosDesignRepository;
-        public IndexModel(IServiceRepository serviceRepository, IConfiguration configuration, ITattoosDesignRepository tattoosDesignRepository)
+        private readonly IAccountRepository _accountRepository;
+        public IndexModel(IServiceRepository serviceRepository, IConfiguration configuration, ITattoosDesignRepository tattoosDesignRepository, IAccountRepository accountRepository)
         {
             _serviceRepository = serviceRepository;
             Configuration = configuration;
             _taxtoosDesignRepository = tattoosDesignRepository;
+            _accountRepository = accountRepository;
         }
         public string CurrentFilter { get; set; }
         public PaginatedList<Service> Service { get; set; } = default!;
@@ -33,9 +36,10 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                 return RedirectToPage("/LoginPage");
             }
             CurrentFilter = searchString;
+            List<Service> list;
             if (!String.IsNullOrEmpty(searchString))
             {
-                IEnumerable<Service> list = _serviceRepository.GetByName(searchString);
+                list = _serviceRepository.GetByName(searchString).ToList();
                 foreach (var item in list)
                 {
                     if (item.TattoosDesignId != null)
@@ -43,10 +47,9 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                         item.TattoosDesign = _taxtoosDesignRepository.GetByID(item.TattoosDesignId.Value);
                     }
                 }
-                ServiceList = list.AsQueryable();
             } else
             {
-                IEnumerable<Service> list = _serviceRepository.GetAllAvailable();
+              list = _serviceRepository.GetAllAvailable().ToList();
                 foreach (var item in list)
                 {
                     if (item.TattoosDesignId != null)
@@ -55,9 +58,16 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                         item.TattoosDesign = _taxtoosDesignRepository.GetByID(id);
                     }
                 }
-                ServiceList = list.AsQueryable();
             }
-
+            for (int i = 0; i<list.Count;i++)
+            {
+                int status = _accountRepository.GetById(list[i].ArtistId,null,null).Status;
+                if (status == 0) {
+                    list.Remove(list[i]);
+                    i--;
+                }
+            }
+            ServiceList = list.AsQueryable();
             var pageSize = Configuration.GetValue("PageSize", 4);
             Service = PaginatedList<Service>.Create(
                 ServiceList, pageIndex ?? 1, pageSize);

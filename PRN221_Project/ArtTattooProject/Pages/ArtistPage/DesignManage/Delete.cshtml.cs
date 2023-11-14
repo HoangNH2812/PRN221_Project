@@ -23,8 +23,8 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
         }
 
         [BindProperty]
-      public TattoosDesign TattoosDesign { get; set; } = default!;
-
+        public TattoosDesign TattoosDesign { get; set; } = default!;
+        public string Msg { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             Account account = HttpContext.Session.GetObjectFromJson<Account>("account");
@@ -48,26 +48,35 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 TattoosDesign = tattoosdesign;
             }
             return Page();
         }
 
-        public  IActionResult OnPost(int? id)
+        public IActionResult OnPost(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var tattoosdesign = _tattoosDesignRepository.GetByID(id.Value);
-
-            if (tattoosdesign != null)
+            try
             {
-                TattoosDesign = tattoosdesign;
-               _tattoosDesignRepository.Delete(TattoosDesign);
+                var tattoosdesign = _tattoosDesignRepository.GetByID(id.Value);
+
+                if (tattoosdesign != null)
+                {
+                    TattoosDesign = tattoosdesign;
+                    _tattoosDesignRepository.Delete(TattoosDesign);
+                }
             }
+            catch (Exception ex)
+            {
+                Msg = ex.Message;
+                return Page();
+            }
+
 
             return RedirectToPage("./Index");
         }

@@ -134,6 +134,8 @@ namespace Repositories.DAO
                 if (tattoosDesign != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
+                    if (DBContext.Services.FirstOrDefault(i=>i.TattoosDesignId==tattoosDesign.TattoosDesignId)!=null)
+                        throw new Exception("This design is used in a Service, delete it before!");
                     DBContext.TattoosDesigns.Remove(tattoosDesign);
                     DBContext.SaveChanges();
                 }

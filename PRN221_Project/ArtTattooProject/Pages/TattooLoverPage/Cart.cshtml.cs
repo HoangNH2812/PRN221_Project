@@ -14,7 +14,8 @@ namespace ArtTattooProject.Pages.TattooLoverPage
         private readonly IArtistRepository _artistRepository;
         private readonly IStudioRepository _studioRepository;
         private readonly IScheduleRepository _scheduleRepository;
-        public CartModel(IAppointmentDetailRepository appointmentDetailRepository, IServiceRepository serviceRepository, IAppointmentRepository appointmentRepository, IArtistRepository artistRepository, IStudioRepository studioRepository, IScheduleRepository scheduleRepository)
+        private readonly IAccountRepository _accountRepository;
+        public CartModel(IAppointmentDetailRepository appointmentDetailRepository, IServiceRepository serviceRepository, IAppointmentRepository appointmentRepository, IArtistRepository artistRepository, IStudioRepository studioRepository, IScheduleRepository scheduleRepository, IAccountRepository accountRepository)
         {
             _appointmentDetailRepository = appointmentDetailRepository;
             _serviceRepository = serviceRepository;
@@ -22,6 +23,7 @@ namespace ArtTattooProject.Pages.TattooLoverPage
             _artistRepository = artistRepository;
             _studioRepository = studioRepository;
             _scheduleRepository = scheduleRepository;
+            _accountRepository = accountRepository;
         }
         public List<AppointmentDetail> cart { get; set; }
         public List<AppointmentDetail> appointmentDetail { get; set; }
@@ -50,10 +52,20 @@ namespace ArtTattooProject.Pages.TattooLoverPage
                         AppointmentDetail temp = item;
                         Total += item.Price;
                         temp.Service = _serviceRepository.GetByID((int)item.ServiceId);
+                        if (temp.Service == null) {
+                            return OnGetDelete(temp.ServiceId.Value);
+                        }
                         temp.Service.Artist = _artistRepository.GetByID((int)item.Service.ArtistId);
                         temp.Schedule = _scheduleRepository.GetByID((int) item.ScheduleId);
                         temp.Service.Artist.Studio = _studioRepository.GetByID((int)temp.Service.Artist.StudioId);
+                       
                         if (temp.Service.Artist.Studio.Status == 0)
+                        {
+                            return OnGetDelete(temp.Service.ServiceId);
+                        }
+
+                        int status = _accountRepository.GetById(temp.Service.ArtistId, null, null).Status;
+                        if (status == 0)
                         {
                             return OnGetDelete(temp.Service.ServiceId);
                         }

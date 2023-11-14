@@ -34,7 +34,13 @@
     
     <form method="post">
         <input type="hidden" asp-for="Artist.ArtistId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        @if (Model.AccountArtist.Status == 1)
+        {
+            <input type="submit" value="Inactive" class="btn btn-danger" />
+        } else
+        {
+            <input type="submit" value="Active" class="btn btn-danger" />
+        }
         <a asp-page="./Index">Back</a>
     </form>
 </div>

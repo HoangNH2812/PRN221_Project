@@ -50,7 +50,7 @@ namespace Repositories.DAO
             try
             {
                 var DBContext = new ArtTattooLoverContext();
-                list = DBContext.Services.Include(i => i.Artist).ThenInclude(i=>i.Studio).Where(i=>i.Artist.Studio.Status == 1);
+                list = DBContext.Services.Include(i => i.Artist).ThenInclude(i=>i.Studio).Where(i=>i.Artist.Studio.Status == 1);                 
             }
             catch (Exception ex)
             {
@@ -172,6 +172,8 @@ namespace Repositories.DAO
                 if (service != null)
                 {
                     var DBContext = new ArtTattooLoverContext();
+                    if (DBContext.AppointmentDetails.FirstOrDefault(i=>i.ServiceId==Service.ServiceId)!= null)
+                        throw new Exception("This service has been used, cannot delete");
                     DBContext.Services.Remove(service);
                     DBContext.SaveChanges();
                 }

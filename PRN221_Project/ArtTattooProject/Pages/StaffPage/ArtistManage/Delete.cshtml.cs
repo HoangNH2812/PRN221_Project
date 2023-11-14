@@ -8,19 +8,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repositories.IRepository;
 using Repositories.Models;
+using Repositories.Repository;
 
 namespace ArtTattooProject.Pages.StaffPage.ArtistManage
 {
     public class DeleteModel : PageModel
     {
         private readonly IArtistRepository _artistRepository;
-        public DeleteModel(IArtistRepository artistRepository)
+        private readonly IAccountRepository _accountRepository;
+        public DeleteModel(IArtistRepository artistRepository, IAccountRepository accountRepository)
         {
             _artistRepository = artistRepository;
+            _accountRepository = accountRepository;
         }
 
         [BindProperty]
-      public Artist Artist { get; set; } = default!;
+        public Artist Artist { get; set; } = default!;
+        public Account AccountArtist { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,14 +43,15 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
             }
 
             var artist = _artistRepository.GetByID(id.Value);
-
-            if (artist == null)
+            var accountArtist = _accountRepository.GetById(artist.ArtistId, null, null);
+            if (artist == null && account != null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Artist = artist;
+                AccountArtist = accountArtist;
             }
             return Page();
         }
@@ -58,11 +63,15 @@ namespace ArtTattooProject.Pages.StaffPage.ArtistManage
                 return NotFound();
             }
             var artist = _artistRepository.GetByID(id.Value);
-
             if (artist != null)
             {
-                Artist = artist;
-                _artistRepository.Delete(Artist);
+                var account = _accountRepository.GetById(artist.ArtistId, null, null);
+                if (account != null)
+                {
+                    Account Account = account;
+                    if (Account.Status == 1) account.Status = 0; else account.Status = 1;
+                    _accountRepository.Update(Account);
+                }
             }
 
             return RedirectToPage("./Index");
