@@ -31,7 +31,7 @@
                 @Html.DisplayFor(model => model.Service.Artist.ArtistId)
             </dd>
         </dl>
-        <div>@Model.Msg</div>
+        <div class="text-danger">@Model.Msg</div>
         <form method="post">
             <input type="hidden" asp-for="Service.ServiceId" />
             <input type="submit" value="Delete" class="btn btn-danger" />

@@ -37,7 +37,7 @@
                 @Html.DisplayFor(model => model.TattoosDesign.Style.StyleName)
             </dd>
         </dl>
-        <div>@Model.Msg</div>
+        <div class="text-danger">@Model.Msg</div>
         <form method="post">
             <input type="hidden" asp-for="TattoosDesign.TattoosDesignId" />
             <input type="submit" value="Delete" class="btn btn-danger" /> 
