@@ -76,8 +76,6 @@ namespace ArtTattooProject.Pages.ArtistPage.DesignManage
                 Msg = ex.Message;
                 return OnGet(id);
             }
-
-
             return RedirectToPage("./Index");
         }
     }

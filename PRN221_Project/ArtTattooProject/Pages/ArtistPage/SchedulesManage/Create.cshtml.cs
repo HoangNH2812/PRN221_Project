@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ArtTattooProject.Pages.Helper;
@@ -35,14 +36,16 @@ namespace ArtTattooProject.Pages.ArtistPage.SchedulesManage
         }
 
         [BindProperty]
+        [Required]
         public Schedule Schedule { get; set; } = default!;
         public string Msg { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public  IActionResult OnPost()
         {
-          if (!ModelState.IsValid || Schedule == null)
+          if (!ModelState.IsValid || Schedule.Time == null)
             {
+                Msg= "Must select date to add schedule";
                 return Page();
             }
             int artistId = HttpContext.Session.GetObjectFromJson<Account>("account").ArtistId.Value;
