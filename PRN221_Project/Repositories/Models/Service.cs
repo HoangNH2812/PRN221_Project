@@ -10,6 +10,7 @@ public partial class Service
     [MinLength(6), MaxLength(50)]
     public string? ServiceName { get; set; }
     [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = false)]
+    [Range(0, Double.PositiveInfinity)]
     public decimal? Price { get; set; }
 
     public int? ArtistId { get; set; }
